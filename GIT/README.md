@@ -1,0 +1,1 @@
+### git rm remote origin`(删除远程地址源)`
