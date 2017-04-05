@@ -1,0 +1,52 @@
+.g-dialog-container{
+  width:100%;
+  height:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left:0;
+  top:0;
+  background: rgba(0,0,0,.6);
+  .dialog-window{
+    padding: 1em;
+    border-radius: 10px;
+    background: rgba(0,0,0,.8);
+    .dialog-header{
+      width: 50px;
+      height:50px;
+      margin:0 auto;
+      &.loading{
+        background: url("./img/loading.png") no-repeat;
+        background-size: 50px;
+      }
+    }
+    .dialog-content{
+      padding: 1em 1em 0;
+      color: #fff;
+      line-height: 180%;
+      text-align: center;
+    }
+    .dialog-footer{
+      padding: 1em 1em 0;
+      text-align: center;
+      button{
+        padding:0.8em 1.8em ;
+        background: rgba(255,255,255,.8);
+        border: none;
+        border-radius: 8px;
+        margin: 0 .3em;
+        text-shadow: #666 1px 1px 0;
+        outline: none;
+        -webkit-appearance: normal;
+        color: #fff;
+        &.red{
+          background: red;
+        }
+        &.yellow{
+          background: yellow;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+.g-dialog-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.6); }
+  .g-dialog-container .dialog-window {
+    padding: 1em;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.8); }
+    .g-dialog-container .dialog-window .dialog-header {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto; }
+      .g-dialog-container .dialog-window .dialog-header.loading {
+        background: url("./img/loading.png") no-repeat;
+        background-size: 50px; }
+    .g-dialog-container .dialog-window .dialog-content {
+      padding: 1em 1em 0;
+      color: #fff;
+      line-height: 180%;
+      text-align: center; }
+    .g-dialog-container .dialog-window .dialog-footer {
+      padding: 1em 1em 0;
+      text-align: center; }
+      .g-dialog-container .dialog-window .dialog-footer button {
+        padding: 0.8em 1.8em;
+        background: rgba(255, 255, 255, 0.8);
+        border: none;
+        border-radius: 8px;
+        margin: 0 .3em;
+        text-shadow: #666 1px 1px 0;
+        outline: none;
+        -webkit-appearance: normal;
+        color: #fff; }
+        .g-dialog-container .dialog-window .dialog-footer button.red {
+          background: red; }
+        .g-dialog-container .dialog-window .dialog-footer button.yellow {
+          background: yellow; }
