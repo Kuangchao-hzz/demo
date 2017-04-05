@@ -30,8 +30,8 @@
         <entry file="file://$PROJECT_DIR$/GIT/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="42">
-                <caret line="1" column="35" selection-start-line="1" selection-start-column="35" selection-end-line="1" selection-end-column="35" />
+              <first_editor relative-caret-position="84">
+                <caret line="3" column="50" selection-start-line="3" selection-start-column="50" selection-end-line="3" selection-end-column="50" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -149,12 +149,12 @@
       <option name="presentableId" value="Default" />
       <updated>1491375252991</updated>
       <workItem from="1491375452252" duration="191000" />
-      <workItem from="1491375793102" duration="489000" />
+      <workItem from="1491375793102" duration="1088000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="680000" />
+    <option name="totallyTimeSpent" value="1279000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
@@ -189,8 +189,8 @@
     <entry file="file://$PROJECT_DIR$/GIT/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="42">
-            <caret line="1" column="35" selection-start-line="1" selection-start-column="35" selection-end-line="1" selection-end-column="35" />
+          <first_editor relative-caret-position="84">
+            <caret line="3" column="50" selection-start-line="3" selection-start-column="50" selection-end-line="3" selection-end-column="50" />
             <folding />
           </first_editor>
           <second_editor />
