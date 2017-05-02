@@ -1,6 +1,6 @@
 # vue-countdown
 
-> A Vue.js project
+> A Vue.js project （手机发送验证码倒计时）
 
 ## Build Setup
 
