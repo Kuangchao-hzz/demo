@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>工厂模式-音乐播放</title>
+</head>
+<body>
+
+</body>
+<script>
+    (function () {
+        var BaseMusic = function () {
+            this.playingMusic = 'see you again'
+        };
+        BaseMusic.prototype = {
+            last: function () {
+                this.information = {status:'200|404',message:'上一曲'}
+            },
+            next: function () {
+                this.information = {currentMusic:'next', status:'200|404',message:'下一曲'}
+            },
+            play: function () {
+                this.information = {currentMusic:'play', status:'200|500',message:'播放'}
+            },
+            mute: function () {
+                this.information = {currentMusic:'mute', status:'200|500',message:'静音'}
+            }
+        }
+        //Wangyi
+        var WangyiMusicAction = function(action){
+            this.vender = '网易云音乐';
+        }
+        WangyiMusicAction.prototype = new BaseMusic();//这些动作我都放在基类了，达到代码复用的目的
+
+        //QQ
+        var QQMusicAction = function(action){
+            this.vender = 'QQ音乐';
+            this.playingMusic = '其实我不low'
+
+        }
+        QQMusicAction.prototype = new BaseMusic() //这些动作我都放在基类了，达到代码复用的目的
+
+        var MusicFactory = function (type) {
+            // 工厂模式职责：我不管你想干啥，我只返回给你一个你想要的对象
+            switch (type) {
+                case 'qq':
+                    return new QQMusicAction();
+
+                case 'wangyi':
+                    return new WangyiMusicAction()
+
+            }
+        }
+        var music = new MusicFactory('qq');
+        music.next();
+        console.log('音乐提供商 : '+music.vender);
+        console.log('正在播放 : '+music.playingMusic);
+        console.log('执行动作 : ' +music.information.message);
+        console.log('接口状态 : ' +music.information.status);
+        console.log('执行动作后歌曲 : ' +music.information.currentMusic);
+    })()
+</script>
+</html>
