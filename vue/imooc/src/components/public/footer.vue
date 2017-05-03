@@ -1,9 +1,9 @@
 <template>
 <ul class="imc-footer">
-  <li><span>首页</span></li>
-  <li><span>课程</span></li>
-  <li><span>下载</span></li>
-  <li><span>我的</span></li>
+  <router-link to="/home" tag="li"><span>首页</span></router-link>
+  <router-link to="/courses" tag="li"><span>课程</span></router-link>
+  <router-link to="/download" tag="li"><span>下载</span></router-link>
+  <router-link to="/my" tag="li"><span>我的</span></router-link>
 </ul>
 </template>
 
@@ -26,6 +26,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 0 5px rgba(0,0,0,.5);
+  z-index: 9999;
   li{
     flex: 1;
     height:100%;
@@ -33,6 +34,9 @@
     span{
      line-height: 55px;
       font-size: 14px;
+    }
+    &.router-link-active{
+      color: #f60;
     }
   }
 }

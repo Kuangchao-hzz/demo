@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home-main">
     <div class="imc-swiper">
       <swiper :options="swiperOption">
         <swiper-slide><img src="http://img.mukewang.com/590369df0001041812000460.jpg"></swiper-slide>
@@ -17,14 +17,12 @@
         <li><i></i><span>发现</span></li>
       </ul>
     </div>
-    <imc-courses></imc-courses>
-    <imc-footer></imc-footer>
+    <courses-recommend></courses-recommend>
   </div>
 </template>
 
 <script>
-import Courses from './courses_recommend.vue'
-import Footer from './../../public/footer.vue'
+import coursesRecommend from './courses_recommend.vue'
 export default {
   data () {
     return {
@@ -36,8 +34,7 @@ export default {
     }
   },
   components: {
-    imcCourses: Courses,
-    imcFooter: Footer
+    coursesRecommend: coursesRecommend
   }
 }
 </script>
@@ -45,6 +42,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" rel="stylesheet/scss">
 @import "../../../../static/css/reset.scss";
+.home-main{
+  padding: 0 0 55px 0;
   .imc-swiper{
     height:140px;
     width: 100%;
@@ -95,5 +94,7 @@ export default {
       }
     }
   }
+}
+
 
 </style>
