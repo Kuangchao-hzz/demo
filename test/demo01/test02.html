@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    body{margin:0;padding:0;}
+    div{position:relative;width:375px;height: 667px;margin:3em auto;border:1px solid #CCC;overflow:hidden;-webkit-user-select:none;user-select:none;}
+    ol{width:100%;}
+    ol>li{height:30px;border-bottom: 1px #ddd solid}
+</style>
+<body>
+<div>
+    <ol>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ol>
+</div>
+</body>
+<script>
+    function myIscroll(cxt) {
+        var isDown = false,
+                ol = cxt.firstElementChild || cxt.firstChild,
+                cur = 0;
+        cxt.addEventListener('mousedown', function (e) {
+            console.log('mousedown');
+            clearTimeout(this._timer);
+            isDown = true;
+            this._oy = e.clientY - cur;
+            this._startTime = e.timeStamp;
+            this._oh=this.scrollHeight;
+            this._ch=this.clientHeight;
+        });
+        cxt.addEventListener('mouseup', mLeave, false);
+        cxt.addEventListener('mousemove', function (e) {
+            if(isDown){
+                // timeStamp 事件属性可返回一个时间戳。指示发生事件的日期和时间（从 epoch 开始的毫秒数）。
+                // epoch 是一个事件参考点。在这里，它是客户机启动的时间。
+
+                if(e.timeStamp-this._startTime > 40){
+                    cur = e.clientY - this._oy
+                }
+                setPos(cur)
+                vy=e.clientY-this._cy;
+                this._cy=e.clientY;
+            }
+        });
+
+        function setPos(y) {
+            ol.style.transform = 'translateY('+y+'px) translateZ(0)'
+        }
+
+        function ease () {
+            cxt._timer = setInterval(function () {
+                cur -= (cur)*0.5;
+                setPos(cur);
+            }, 20)
+        }
+
+        function mLeave() {
+            if(isDown){
+                var oh = this.scrollHeight-this.clientHeight
+                isDown = false;
+                cur+=vy;
+                ease()
+            }
+        }
+    }
+    myIscroll(document.querySelector('div'))
+</script>
+</html>

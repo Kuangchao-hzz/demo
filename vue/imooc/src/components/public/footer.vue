@@ -1,10 +1,12 @@
 <template>
-<ul class="imc-footer">
-  <router-link to="/home" tag="li"><span>首页</span></router-link>
-  <router-link to="/courses" tag="li"><span>课程</span></router-link>
-  <router-link to="/download" tag="li"><span>下载</span></router-link>
-  <router-link to="/my" tag="li"><span>我的</span></router-link>
-</ul>
+  <div class="imc-footer">
+    <ul>
+      <router-link to="/home" tag="li"><i class="icon-home"></i><p>首页</p></router-link>
+      <router-link to="/courses" tag="li"><i class="icon-book"></i><p>课程</p></router-link>
+      <router-link to="/download" tag="li"><i class="icon-cloud-download"></i><p>下载</p></router-link>
+      <router-link to="/my" tag="li"><i class=" icon-user"></i><p>我的</p></router-link>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -15,28 +17,33 @@
 
 <style lang="scss" rel="stylesheet/scss">
 .imc-footer{
-  height:55px;
-  width: 100%;
-  background: #fff;
-  border-top: 1px #ddd solid;
-  position: fixed;
-  bottom: 0;
-  left:0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 5px rgba(0,0,0,.5);
-  z-index: 9999;
-  li{
-    flex: 1;
-    height:100%;
-    text-align: center;
-    span{
-     line-height: 55px;
-      font-size: 14px;
-    }
-    &.router-link-active{
-      color: #f60;
+  ul{
+    width: 100%;
+    background: #fff;
+    border-top: 1px #ddd solid;
+    position: fixed;
+    bottom: 0;
+    left:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 5px rgba(0,0,0,.5);
+    z-index: 9999;
+    li{
+      flex: 1;
+      height:100%;
+      text-align: center;
+      padding: 5px 0;
+      i{
+        font-size: 24px;
+      }
+      p{
+        font-size: 12px;
+        padding-top: 5px;
+      }
+      &.router-link-active{
+        color: #f60;
+      }
     }
   }
 }

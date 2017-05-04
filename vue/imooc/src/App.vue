@@ -15,5 +15,7 @@ export default {
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
+  @import "../static/css/reset";
+  @import "../static/css/global";
   @import "./assets/css/font-awesome.min.css";
 </style>

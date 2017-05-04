@@ -17,12 +17,18 @@
         <li><i></i><span>发现</span></li>
       </ul>
     </div>
-    <courses-recommend></courses-recommend>
+    <courses-recommend :random-recommend-data="randomRecommend"></courses-recommend>
+    <mugen-scroll :handler="fetchData" :should-handle="!loading">
+      loading...
+      {{loading}}
+      {{randomRecommend}}
+    </mugen-scroll>
   </div>
 </template>
 
 <script>
-import coursesRecommend from './courses_recommend.vue'
+import coursesRecommend from '@/components/pages/home/courses_recommend.vue'
+import MugenScroll from 'vue-mugen-scroll'
 export default {
   data () {
     return {
@@ -30,18 +36,26 @@ export default {
         autoplay: 3000,
         pagination: '.swiper-pagination',
         autoplayDisableOnInteraction: false
-      }
+      },
+      loading: false,
+      randomRecommend: 4
+    }
+  },
+  methods: {
+    fetchData () {
+      this.loading = false
+      this.randomRecommend++
     }
   },
   components: {
-    coursesRecommend: coursesRecommend
+    coursesRecommend,
+    MugenScroll
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" rel="stylesheet/scss">
-@import "../../../../static/css/reset.scss";
 .home-main{
   padding: 0 0 55px 0;
   .imc-swiper{
