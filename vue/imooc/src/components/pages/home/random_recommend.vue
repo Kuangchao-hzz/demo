@@ -2,10 +2,10 @@
   <div class="random-recommend">
     <div class="imc-courses-cards">
       <div class="title">
-        <h5>猜你喜欢{{data}}</h5>
+        <h5>猜你喜欢{{this.moreRandomRecommend}}</h5>
       </div>
       <div class="content">
-        <div class="courses-item" v-for="item in data">
+        <div class="courses-item" v-for="item in this.moreRandomRecommend">
           <div class="header">
             <span>Android</span>
           </div>
@@ -26,7 +26,7 @@
 export default{
   data () {
     return {
-      data: this.moreRandomRecommend
+
     }
   },
   props: ['moreRandomRecommend']

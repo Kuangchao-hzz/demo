@@ -1,17 +1,25 @@
 <template>
   <div id="app">
+    <header-bar></header-bar>
     <router-view></router-view>
     <imc-footer></imc-footer>
   </div>
 </template>
 
 <script>
-import Footer from './components/public/footer.vue'
-export default {
-  components: {
-    imcFooter: Footer
+  import headerBar from '@/components/public/header_bar'
+  import Footer from './components/public/footer.vue'
+  export default {
+    data () {
+      return {
+
+      }
+    },
+    components: {
+      imcFooter: Footer,
+      headerBar
+    }
   }
-}
 </script>
 
 <style lang="scss" rel="stylesheet/scss">

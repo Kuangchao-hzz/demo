@@ -1,5 +1,5 @@
 <template>
-  <div class="imc-footer">
+  <div class="imc-footer" v-if="a">
     <ul>
       <router-link to="/home" tag="li"><i class="icon-home"></i><p>首页</p></router-link>
       <router-link to="/courses" tag="li"><i class="icon-book"></i><p>课程</p></router-link>
@@ -10,20 +10,32 @@
 </template>
 
 <script>
+  import bus from '@/assets/eventBus.js'
   export default {
-
+    data () {
+      return {
+        a: true
+      }
+    },
+    mounted () {
+      var self = this
+      bus.$on('off_foot', function (msg) {
+        self.a = msg
+        console.log(msg)
+      })
+    }
   }
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
 .imc-footer{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left:0;
   ul{
-    width: 100%;
     background: #fff;
     border-top: 1px #ddd solid;
-    position: fixed;
-    bottom: 0;
-    left:0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,7 +45,7 @@
       flex: 1;
       height:100%;
       text-align: center;
-      padding: 5px 0;
+      padding: 6px 0;
       i{
         font-size: 24px;
       }

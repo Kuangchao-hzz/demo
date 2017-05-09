@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #input::before{
+        content: '';
+        display: block;
+        position: relative;
+        left: 0;
+        top: 0;
+        width: 10px;
+        height:10px;
+    }
+</style>
+<body>
+<input type="file" id="fileInput" multiple>
+<button id="btn">click me</button>
+<progress id="myProgress" value="50" max="100"></progress>
+<input type="text" id="input">
+</body>
+<script>
+    var btn = document.getElementById('btn');
+
+    btn.onclick = function () {
+        var fileInput = document.getElementById('fileInput');
+        console.log(fileInput)
+        console.log(fileInput.files)
+        console.log(fileInput[0])
+    }
+</script>
+</html>

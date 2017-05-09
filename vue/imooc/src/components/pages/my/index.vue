@@ -1,102 +1,104 @@
 <template>
   <div class="my-main">
-    <div class="my-header">
-      <div class="pic">
-        <img src="../../../../static/img/test_avatar.png">
+    <scroller>
+      <div class="my-header">
+        <div class="pic">
+          <img src="../../../../static/img/test_avatar.png">
+        </div>
+        <div class="basis">
+          <p class="nickname">nothing_hzz</p>
+          <p class="description">
+            <span>学习时长</span>
+            <span>173小时</span>
+            <i class="segmentation"></i>
+            <span>经验</span>
+            <span>3802</span>
+          </p>
+        </div>
+        <div class="bar">
+          <ul>
+            <li class="attention">
+              <span>关注</span>
+              <span>2</span>
+            </li>
+            <li class="fans">
+              <span>粉丝</span>
+              <span>2</span>
+            </li>
+            <li class="integral">
+              <span>积分</span>
+              <span>2</span>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="basis">
-        <p class="nickname">nothing_hzz</p>
-        <p class="description">
-          <span>学习时长</span>
-          <span>173小时</span>
-          <i class="segmentation"></i>
-          <span>经验</span>
-          <span>3802</span>
-        </p>
-      </div>
-      <div class="bar">
+      <div class="my-bar">
         <ul>
-          <li class="attention">
-            <span>关注</span>
-            <span>2</span>
+          <li>
+            <i class="icon-tasks"></i>
+            <p>我的课程</p>
           </li>
-          <li class="fans">
-            <span>粉丝</span>
-            <span>2</span>
+          <li>
+            <i class="icon-desktop"></i>
+            <p>我的实战</p>
           </li>
-          <li class="integral">
-            <span>积分</span>
-            <span>2</span>
+          <li>
+            <i class="icon-question-sign"></i>
+            <p>我的猿问</p>
+          </li>
+          <li>
+            <i class="icon-tag"></i>
+            <p>我的手机</p>
           </li>
         </ul>
       </div>
-    </div>
-    <div class="my-bar">
-      <ul>
-        <li>
-          <i class="icon-tasks"></i>
-          <p>我的课程</p>
-        </li>
-        <li>
-          <i class="icon-desktop"></i>
-          <p>我的实战</p>
-        </li>
-        <li>
-          <i class="icon-question-sign"></i>
-          <p>我的猿问</p>
-        </li>
-        <li>
-          <i class="icon-tag"></i>
-          <p>我的手机</p>
-        </li>
-      </ul>
-    </div>
-    <div class="my-body">
-      <ul>
-        <li>
-          <i class="icon icon-eye-open"></i>
-          <p>
-            <span>历史记录</span>
-            <i class="icon icon-angle-right"></i>
-          </p>
-        </li>
-        <li>
-          <i class="icon icon-book"></i>
-          <p>
-            <span>我的课表</span>
-            <i class="icon icon-angle-right"></i>
-          </p>
-        </li>
-        <li>
-          <i class="icon icon-file-alt"></i>
-          <p>
-            <span>我的订单</span>
-            <i class="icon icon-angle-right"></i>
-          </p>
-        </li>
-        <li class="partition-end">
-          <i class="icon icon-money"></i>
-          <p>
-            <span>优惠券</span>
-            <i class="icon icon-angle-right"></i>
-          </p>
-        </li>
-        <li>
-          <i class="icon icon-lightbulb"></i>
-          <p>
-            <span>夜间模式</span>
-            <i class="icon icon-angle-right"></i>
-          </p>
-        </li>
-        <li>
-          <i class="icon icon-cog"></i>
-          <p>
-            <span>设置</span>
-            <i class="icon icon-angle-right"></i>
-          </p>
-        </li>
-      </ul>
-    </div>
+      <div class="my-body">
+        <ul>
+          <li>
+            <i class="icon icon-eye-open"></i>
+            <p>
+              <span>历史记录</span>
+              <i class="icon icon-angle-right"></i>
+            </p>
+          </li>
+          <li>
+            <i class="icon icon-book"></i>
+            <p>
+              <span>我的课表</span>
+              <i class="icon icon-angle-right"></i>
+            </p>
+          </li>
+          <li>
+            <i class="icon icon-file-alt"></i>
+            <p>
+              <span>我的订单</span>
+              <i class="icon icon-angle-right"></i>
+            </p>
+          </li>
+          <li class="partition-end">
+            <i class="icon icon-money"></i>
+            <p>
+              <span>优惠券</span>
+              <i class="icon icon-angle-right"></i>
+            </p>
+          </li>
+          <li>
+            <i class="icon icon-lightbulb"></i>
+            <p>
+              <span>夜间模式</span>
+              <i class="icon icon-angle-right"></i>
+            </p>
+          </li>
+          <li>
+            <i class="icon icon-cog"></i>
+            <p>
+              <span>设置</span>
+              <i class="icon icon-angle-right"></i>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </scroller>
   </div>
 </template>
 

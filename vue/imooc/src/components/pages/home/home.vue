@@ -1,34 +1,36 @@
 <template>
   <div class="home-main">
-    <div class="imc-swiper">
-      <swiper :options="swiperOption">
-        <swiper-slide><img src="http://img.mukewang.com/590369df0001041812000460.jpg"></swiper-slide>
-        <swiper-slide><img src="http://img.mukewang.com/5903688d000141fd12000460.jpg"></swiper-slide>
-        <swiper-slide><img src="http://img.mukewang.com/59036a530001aa2912000460.jpg"></swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
-      </swiper>
-    </div>
-    <div class="imc-tabs">
-      <ul>
-        <li><i></i><span>实战</span></li>
-        <li><i></i><span>路径</span></li>
-        <li><i></i><span>猿问</span></li>
-        <li><i></i><span>手记</span></li>
-        <li><i></i><span>发现</span></li>
-      </ul>
-    </div>
-    <courses-recommend :random-recommend-data="randomRecommend"></courses-recommend>
-    <mugen-scroll :handler="fetchData" :should-handle="!loading">
-      loading...
-      {{loading}}
-      {{randomRecommend}}
-    </mugen-scroll>
+    <scroller
+    :on-refresh="refresh"
+    :on-infinite="infinite"
+    >
+      <div class="imc-swiper">
+        <swiper :options="swiperOption">
+          <swiper-slide><img src="http://img.mukewang.com/590369df0001041812000460.jpg"></swiper-slide>
+          <swiper-slide><img src="http://img.mukewang.com/5903688d000141fd12000460.jpg"></swiper-slide>
+          <swiper-slide><img src="http://img.mukewang.com/59036a530001aa2912000460.jpg"></swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+      </div>
+      <div class="imc-tabs">
+        <ul>
+          <router-link to="/home/_example" tag="li"><i></i><span>实战</span></router-link>
+          <router-link to="/home/_path" tag="li"><i></i><span>路径</span></router-link>
+          <router-link to="/home/_question" tag="li"><i></i><span>猿问</span></router-link>
+          <router-link to="/home/_note" tag="li"><i></i><span>手记</span></router-link>
+          <router-link to="/home/_more" tag="li"><i></i><span>发现</span></router-link>
+        </ul>
+      </div>
+      <courses-recommend :random-recommend-data="randomRecommend"></courses-recommend>
+    </scroller>
+    <transition name="fade">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
 import coursesRecommend from '@/components/pages/home/courses_recommend.vue'
-import MugenScroll from 'vue-mugen-scroll'
 export default {
   data () {
     return {
@@ -37,19 +39,26 @@ export default {
         pagination: '.swiper-pagination',
         autoplayDisableOnInteraction: false
       },
-      loading: false,
-      randomRecommend: 4
+      randomRecommend: 1
     }
   },
   methods: {
-    fetchData () {
-      this.loading = false
-      this.randomRecommend++
+    refresh: function (done) {
+      done(true)
+    },
+    infinite: function (done) {
+      if (this.randomRecommend > 10) {
+        done(true)
+        return
+      }
+      setTimeout(() => {
+        this.randomRecommend += 4
+        done()
+      }, 1500)
     }
   },
   components: {
-    coursesRecommend,
-    MugenScroll
+    coursesRecommend
   }
 }
 </script>
@@ -57,7 +66,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" rel="stylesheet/scss">
 .home-main{
-  padding: 0 0 55px 0;
+  position: relative;
+  height: 100%;
   .imc-swiper{
     height:140px;
     width: 100%;
@@ -100,6 +110,20 @@ export default {
           background: url("../../../../static/img/imc_tab_2.png") center center;
           background-size: cover;
         }
+        &:nth-of-type(3) i{
+          background: url("../../../../static/img/imc_tab_1.png") center center;
+          background-size: cover;
+
+        }
+        &:nth-of-type(4) i{
+          background: url("../../../../static/img/imc_tab_2.png") center center;
+          background-size: cover;
+        }
+        &:nth-of-type(5) i{
+          background: url("../../../../static/img/imc_tab_1.png") center center;
+          background-size: cover;
+
+        }
         span{
           display: block;
           font-size: 14px;
@@ -107,6 +131,17 @@ export default {
         }
       }
     }
+  }
+
+  .fade-enter-active {
+    transition: all .3s ease;
+  }
+  .fade-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .fade-enter, .fade-leave-active {
+    transform: translateX(10px);
+    opacity: 0;
   }
 }
 

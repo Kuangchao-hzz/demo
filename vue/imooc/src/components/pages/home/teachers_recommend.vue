@@ -2,12 +2,12 @@
 <div class="teachers-recommend">
   <h5 class="title">慕课精英名师推荐</h5>
   <swiper class="teachers-swipers" :options="swiperOption">
-    <swiper-slide v-for="item in 10">
+    <swiper-slide v-for="(item, index) in 10">
       <div class="teacher-item">
         <div class="pic">
           <img src="../../../../static/img/test_avatar.png">
         </div>
-        <p class="teacher-name">王福明</p>
+        <p class="teacher-name">何周泽{{index}}</p>
         <p class="teacher-position">web前端工程师</p>
       </div>
     </swiper-slide>

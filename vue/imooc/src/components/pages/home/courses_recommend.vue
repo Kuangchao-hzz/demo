@@ -5,7 +5,7 @@
     <courses-classify-cards :basis-course="basisCourse[1]"></courses-classify-cards>
     <courses-classify-items></courses-classify-items>
     <teacher-recommend></teacher-recommend>
-    <random-recommend :more-random-recommend="randomRecommend"></random-recommend>
+    <random-recommend :more-random-recommend="this.randomRecommendData"></random-recommend>
   </div>
 
 </template>
@@ -27,11 +27,16 @@ export default{
           title: '实战推荐',
           change: true
         }
-      ],
-      randomRecommend: this.randomRecommendData
+      ]
     }
   },
   props: ['randomRecommendData'],
+  mounted: function () {
+
+  },
+  methods: {
+
+  },
   components: {
     coursesClassifyCards,
     coursesClassifyItems,
