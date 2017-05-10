@@ -13,7 +13,6 @@
 </template>
 
 <script>
-  import bus from '@/assets/eventBus.js'
   export default {
     data () {
       return {
@@ -42,19 +41,56 @@
         for (var i in this.headerBar_config.icon) {
           this.headerBar_config.icon[i] = false
         }
+        this.$store.dispatch('controller_foot_tabbar', this.$route.name)
         switch (this.$route.name) {
           case 'home':
             this.headerBar_config.title = '慕课网'
             this.headerBar_config.icon.search = true
             this.headerBar_config.icon.email = true
             this.headerBar_config._handler_icon1 = this._search
-            bus.$emit('off_foot', true)
+            break
+          case 'courses':
+            this.headerBar_config.title = '课程'
+            this.headerBar_config.icon.search = true
+            this.headerBar_config.icon.email = true
+            this.headerBar_config._handler_icon1 = this._search
+            break
+          case 'download':
+            this.headerBar_config.title = '下载'
+            this.headerBar_config.icon.search = true
+            this.headerBar_config.icon.email = true
+            this.headerBar_config._handler_icon1 = this._search
+            break
+          case 'my':
+            this.headerBar_config.title = '我的'
+            this.headerBar_config.icon.search = true
+            this.headerBar_config.icon.email = true
+            this.headerBar_config._handler_icon1 = this._search
             break
           case '_example':
             this.headerBar_config.title = '实战'
             this.headerBar_config.icon.back = true
             this.headerBar_config._handler_icon1 = this._goBack
-            bus.$emit('off_foot', false)
+            break
+          case '_path':
+            this.headerBar_config.title = '职业路径'
+            this.headerBar_config.icon.back = true
+            this.headerBar_config._handler_icon1 = this._goBack
+            break
+          case '_question':
+            this.headerBar_config.title = '猿问'
+            this.headerBar_config.icon.back = true
+            this.headerBar_config._handler_icon1 = this._goBack
+            break
+          case '_note':
+            this.headerBar_config.title = '手记'
+            this.headerBar_config.icon.back = true
+            this.headerBar_config._handler_icon1 = this._goBack
+            break
+          case '_more':
+            this.headerBar_config.title = '发现'
+            this.headerBar_config.icon.back = true
+            this.headerBar_config._handler_icon1 = this._goBack
             break
         }
       },

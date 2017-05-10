@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/pages/home/home'
-import Example from '@/components/pages/home/example'
+import Example from '@/components/pages/home/Example'
+import Path from '@/components/pages/home/Path'
 import Courses from '@/components/pages/courses/index'
 import Download from '@/components/pages/download/index'
 import My from '@/components/pages/my/index'
@@ -28,7 +29,7 @@ export default new Router({
         {
           path: '_path',
           name: '_path',
-          component: Example
+          component: Path
         },
         {
           path: '_question',

@@ -1,5 +1,5 @@
 <template>
-  <div class="imc-footer" v-if="a">
+  <div class="imc-footer" v-if="isShow">
     <ul>
       <router-link to="/home" tag="li"><i class="icon-home"></i><p>首页</p></router-link>
       <router-link to="/courses" tag="li"><i class="icon-book"></i><p>课程</p></router-link>
@@ -10,19 +10,21 @@
 </template>
 
 <script>
-  import bus from '@/assets/eventBus.js'
   export default {
     data () {
       return {
-        a: true
+
       }
     },
     mounted () {
-      var self = this
-      bus.$on('off_foot', function (msg) {
-        self.a = msg
-        console.log(msg)
-      })
+
+    },
+    computed: {
+      isShow () {
+        // 从 store 实例中读取状态最简单的方法就是在计算属性中返回某个状态
+        // 每当 $store.state.foot_tabbar 变化的时候, 都会重新求取计算属性，并且触发更新相关联的 DOM
+        return this.$store.state.foot_tabbar
+      }
     }
   }
 </script>

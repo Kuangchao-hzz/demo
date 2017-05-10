@@ -12,12 +12,12 @@
           </swiper>
         </div>
         <div class="IT-classification">
-          <div class="classify-item">全部</div>
-          <div class="classify-item">前端开发</div>
-          <div class="classify-item">后端语言</div>
-          <div class="classify-item">移动开发</div>
-          <div class="classify-item">数据库</div>
-          <div class="classify-item">运维&测试</div>
+          <div class="classify-item"
+               v-for="(item, index) in tabs"
+               @click="isActive(index)" :class="{ active: index == active }"
+          >
+            {{ item.classify }}
+          </div>
         </div>
         <div class="example-list-warp">
           <div class="example-item" v-for="(item, index) in 20">
@@ -46,15 +46,50 @@
           autoplay: 3000,
           pagination: '.swiper-pagination',
           autoplayDisableOnInteraction: false
-        }
+        },
+        active: 0,
+        tabs: [
+          {
+            id: 0,
+            classify: '全部'
+          },
+          {
+            id: 1,
+            classify: '前端开发'
+          },
+          {
+            id: 2,
+            classify: '后端语言'
+          },
+          {
+            id: 3,
+            classify: '移动开发'
+          },
+          {
+            id: 4,
+            classify: '数据库'
+          },
+          {
+            id: 5,
+            classify: '运维&测试'
+          }
+        ]
       }
+    },
+    mounted () {
+
     },
     methods: {
       refresh: function (done) {
-        done(true)
+        setTimeout(() => {
+          done()
+        }, 1500)
       },
       _$off_footer: function () {
 
+      },
+      isActive: function (id) {
+        this.active = id
       }
     },
     components: {
@@ -86,6 +121,10 @@
       padding: 5px 0;
       font-size: 12px;
       border-radius: 12px;
+      &.active{
+        color: #fff;
+        background: #5b390e;
+      }
     }
   }
   $picWidth: 130px;

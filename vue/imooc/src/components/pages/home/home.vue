@@ -31,6 +31,7 @@
 
 <script>
 import coursesRecommend from '@/components/pages/home/courses_recommend.vue'
+import axios from '@/axios/index'
 export default {
   data () {
     return {
@@ -41,6 +42,9 @@ export default {
       },
       randomRecommend: 1
     }
+  },
+  mounted () {
+    axios.test()
   },
   methods: {
     refresh: function (done) {
@@ -66,8 +70,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" rel="stylesheet/scss">
 .home-main{
+  width: 100%;
+  height: 100%-5.997%;
   position: relative;
-  height: 100%;
   .imc-swiper{
     height:140px;
     width: 100%;
@@ -133,6 +138,13 @@ export default {
     }
   }
 
+  .pull-to-refresh-layer{
+    height: 55px !important;
+    margin-top: -55px !important;
+  }
+  .loading-layer{
+    height: 40px !important;
+  }
   .fade-enter-active {
     transition: all .3s ease;
   }
