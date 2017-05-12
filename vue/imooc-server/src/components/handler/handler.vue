@@ -1,7 +1,7 @@
 <template>
   <Row>
     <Form ref="formInline">
-      <Row>
+      <Row :gutter="16">
         <Col span="8">
         <Form-item>
           <Input placeholder="请输入...">
@@ -11,7 +11,7 @@
         </Col>
         <Col span="4">
         <Form-item>
-
+          <Button type="primary" @click="toUrlLink" long>添加</Button>
         </Form-item>
         </Col>
       </Row>
@@ -27,6 +27,11 @@
     data () {
       return {
         searchBtn: 'large'
+      }
+    },
+    methods: {
+      toUrlLink () {
+        this.$router.push('/home/_Add_Form')
       }
     }
   }

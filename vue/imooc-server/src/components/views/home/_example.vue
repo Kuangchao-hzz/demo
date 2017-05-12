@@ -2,16 +2,17 @@
   <div>
     <handler></handler>
     <Tabs value="name1">
-      <Tab-pane label="(index1)" name="name1">
+      <Tab-pane label="表格" name="name1">
         <Table :columns="columns1" :data="data1"></Table>
       </Tab-pane>
-      <Tab-pane label="(index1)" name="name2">
+      <Tab-pane label="统计" name="name2">
         <Table :row-class-name="rowClassName" :columns="columns1" :data="data1"></Table>
       </Tab-pane>
-      <Tab-pane label="(index1)" name="name3">
+      <Tab-pane label="搜索" name="name3">
 
       </Tab-pane>
     </Tabs>
+    <router-view></router-view>
   </div>
 </template>
 <script>

@@ -5,39 +5,48 @@
             :width="width"
             :open-names="openMenu.open"
             :active-name="openMenu.active"
+            :accordion="accordion"
             @on-select="_handlerRouter"
       >
         <Submenu name="home">
           <template slot="title">
             <Icon type="ios-paper"></Icon>
-            主页(HOME)
+            首页管理
           </template>
-          <Menu-item name="/home">主页1</Menu-item>
-          <Menu-item name="/home/_home">主页2</Menu-item>
-          <Menu-item name="/home/_home_">主页3</Menu-item>
+          <Menu-item name="/home/_example">实战</Menu-item>
+          <Menu-item name="/home/_path">路径</Menu-item>
+          <Menu-item name="/home/_question">猿问</Menu-item>
+          <Menu-item name="/home/_note">手记</Menu-item>
+          <Menu-item name="/home/_more">发现</Menu-item>
         </Submenu>
-        <Submenu name="2">
+        <Submenu name="courses">
           <template slot="title">
             <Icon type="ios-people"></Icon>
-            用户管理
+            课程管理
           </template>
-          <Menu-item name="2-1">新增用户</Menu-item>
-          <Menu-item name="2-2">活跃用户</Menu-item>
+          <Menu-item name="/courses/_example">前端开发</Menu-item>
+          <Menu-item name="/courses/_example">后端开发</Menu-item>
+          <Menu-item name="/courses/_example">移动开发</Menu-item>
+          <Menu-item name="/courses/_example">数据库</Menu-item>
+          <Menu-item name="/courses/_example">云计算&大数据</Menu-item>
+          <Menu-item name="/courses/_example">运维&测试</Menu-item>
+          <Menu-item name="/courses/_example">UI设计</Menu-item>
         </Submenu>
-        <Submenu name="3">
+        <Submenu name="download">
           <template slot="title">
             <Icon type="stats-bars"></Icon>
-            统计分析
+            下载管理
           </template>
-          <Menu-group title="使用">
-            <Menu-item name="3-1">新增和启动</Menu-item>
-            <Menu-item name="3-2">活跃分析</Menu-item>
-            <Menu-item name="3-3">时段分析</Menu-item>
-          </Menu-group>
-          <Menu-group title="留存">
-            <Menu-item name="3-4">用户留存</Menu-item>
-            <Menu-item name="3-5">流失用户</Menu-item>
-          </Menu-group>
+        </Submenu>
+        <Submenu name="my">
+          <template slot="title">
+            <Icon type="stats-bars"></Icon>
+            我的
+          </template>
+          <Menu-item name="2-1">我的课程</Menu-item>
+          <Menu-item name="2-2">我的实战</Menu-item>
+          <Menu-item name="2-2">我的猿问</Menu-item>
+          <Menu-item name="2-2">我的手记</Menu-item>
         </Submenu>
       </Menu>
     </div>
@@ -50,15 +59,19 @@
       return {
         theme: 'light',
         width: '100%',
+        accordion: true,
         openMenu: {
-          open: ['home'],
-          active: '/home'
+          open: [this.$route.path.split('/')[1]],
+          active: this.$route.path
         }
       }
     },
     methods: {
       _handlerRouter (name) {
-        this.$router.push(name)
+        console.log(name)
+        this.$router.push({
+          path: name.split(',')[0]
+        })
       }
     }
   }

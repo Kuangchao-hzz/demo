@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import home from '@/components/views/home/index'
-import _home from '@/components/views/home/index1'
+import Home from './home'
 
 Vue.use(Router)
 
@@ -10,19 +9,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: 'home'
+      redirect: '/home/_path'
     },
-    {
-      path: '/home',
-      name: 'home',
-      component: home,
-      children: [
-        {
-          path: '_home',
-          name: '_home',
-          component: _home
-        }
-      ]
-    }
+    Home
   ]
 })

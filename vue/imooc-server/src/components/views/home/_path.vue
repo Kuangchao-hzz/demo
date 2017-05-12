@@ -2,14 +2,8 @@
   <div>
     <handler></handler>
     <Tabs value="name1">
-      <Tab-pane label="标签一" name="name1">
+      <Tab-pane label="路径" name="name1">
         <Table :columns="columns1" :data="data1"></Table>
-      </Tab-pane>
-      <Tab-pane label="标签二" name="name2">
-        <Table :row-class-name="rowClassName" :columns="columns1" :data="data1"></Table>
-      </Tab-pane>
-      <Tab-pane label="标签三" name="name3">
-
       </Tab-pane>
     </Tabs>
   </div>
