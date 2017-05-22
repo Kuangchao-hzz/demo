@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  /*var arr = ['a', 'b', 'c'];
+  var arr1 = [['a'],'b,','b']
+  var arr2 = new Array()
+  var iteration = 'obj';
+  console.log('类似数组: ' + Array.from(arr)); // ["a", "b", "c"]
+  console.log('可迭代的对象: ' + Array.from(iteration)) // ["o", "b", "j"]
+  console.log(arr1.find(function (n) {
+    return 'a'
+  }))*/
+
+  var a = ['apple', 'apple', 'pineapple'];
+  var b = ['苹果', '香蕉', '菠萝', '梨']
+  var o = new Object();
+  o = Object.keys(a)
+  console.log(o)
+  Array.prototype.getArrayKeys = function () {
+    var a = new Array(this.length);
+    console.log(this)
+    for(var i = 0;i<this.length; i++){
+      a[this[i]] = i
+    }
+    return a
+  };
+  Array.prototype.setArrayKeysValue = function (arr) {
+    var keys = Object.keys(this.getArrayKeys()),
+        a = new Array(this.length);
+    for(var i = 0; i<keys.length;i++){
+      a[keys[i]] = arr[i]
+    }
+
+    return a
+  };
+  console.log(a.getArrayKeys())
+  console.log(a.setArrayKeysValue(b))
+</script>
+</html>

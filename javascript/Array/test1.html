@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+
+  var Obj = function () {
+    this.name ='hello'
+  }
+
+  var x = new Obj();
+  var bValue
+  Object.defineProperty(x, 'name', {
+    get: function () {
+      console.log('该属性的name值被打印了')
+    },
+    set: function (value) {
+      console.log('该属性的name值设置为：' + value);
+      bValue =  value
+    },
+    writable: true,
+    configurable:true
+  });
+  x.name
+  x.name = 'world';
+  console.log(x)
+</script>
+</html>

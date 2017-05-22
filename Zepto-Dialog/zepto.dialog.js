@@ -41,9 +41,7 @@
                 win = this.win,
                 winHeader = this.winHeader,
                 winContent = this.winContent,
-                winFooter = this.winFooter
-
-
+                winFooter = this.winFooter;
 
             if(this.isConfig){
                 win.append(winHeader.addClass(config.type))
@@ -64,8 +62,6 @@
                             callback();
                         })
                     }
-
-
                 })
             }
 

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  /*
+    @ http://www.cnblogs.com/coco1s/p/6509141.html
+
+  * add(1)(2) // 3
+  * add(1, 2, 3)(10) // 16
+  * add(1)(2)(3)(4)(5) // 15
+  * */
+
+  function add() {
+    // Array.prototype.slice.call(arguments)能将具有length属性的对象转成数组
+    // call(args) 将所带参数推送到调用者的作用域中
+    /* Array.prototype.slice = function(start, end){
+      var result = new Array();
+      start = start || 0;
+      end = end || this.length // arguments.length
+      for (var i = 0; i<this.length; i++) {
+        result.push(this[i])
+      };
+      return result;
+    } */
+    // 在 JavaScript 进行对比或者各种运算的时候会把对象转换成这些类型，从而进行后续的操作。
+    var args = Array.prototype.slice.call(arguments)
+    console.log(args)
+    var fn = function () {
+      console.log(this)
+      var arg_fn = Array.prototype.slice.call(arguments);
+      return add.apply(fn, args.concat(arg_fn))
+    }
+    fn.valueOf = function () {
+      return args.reduce(function (a, b) {
+        return a + b
+      })
+    }
+    return fn
+  }
+  add(1, 2)(3)(4);
+  var obj = {
+    toString: function () {
+      console.log('调用了toString方法...')
+      return '222'
+    },
+    valueOf: function () {
+      console.log('调用了valueOf方法...');
+      return '111';
+    }
+  }
+  
+  console.log(typeof 1)
+  console.log(obj instanceof String)
+  
+  function Animal() {
+    this.name = 'Animal';
+    this.getName = function (name) {
+      console.log(name)
+    }
+  }
+  function Cat(name) {
+    console.log(name)
+    this.name = name || 'Cat'
+  }
+  var animal = new Animal()
+  var cat = new Cat()
+  animal.getName.call(cat, ['duck']) // 将animal的方法推送到cat中执行;
+  animal.getName.apply(cat, ['Dog', 'duck']) //apply方法能劫持另外一个对象的方法，继承另外一个对象的属性
+
+  function foo() {
+    console.log(this)
+  }
+  foo.call(1)
+</script>
+</html>
