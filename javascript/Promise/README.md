@@ -1,4 +1,4 @@
-### Promise 
+# Promise 
 
 
   * 用于异步计算。一个 Promise 表示一个现在或将来可用，亦或永远不可用的值。
@@ -26,13 +26,13 @@
   
   ```
   
-  #### Promise.all(iterable) 
+  ## Promise.all(iterable) 
   
   * 这个方法返回一个新的promise对象，
   * 该promise对象在iterable里所有的promise对象都成功的时候才会触发成功, 
   * 一旦有任何一个iterable里面的promise对象失败则立即触发该promise对象的失败
   
-  #### Promise.race(iterable)
+  ## Promise.race(iterable)
   
   * 在可迭代的 resolves 或 rejects 中 promises 有一个完成或失败，将显示其值或原因。
   * race 函数返回一个 Promise，它将与第一个传递的 promise 相同的完成方式被完成。它可以是完成（ resolves），也可以是失败（rejects），这要取决于第一个完成的方式是两个中的哪个。
@@ -51,7 +51,7 @@
     console.log(value); // "two" 
     });
   ```
-  #### Promise.reject(reason)
+  ## Promise.reject(reason)
   
   * 方法返回一个用reason拒绝的Promise。
   
@@ -63,7 +63,7 @@
     });
   ```
   
-   #### Promise.reject(reason)
+   ## Promise.reject(reason)
     
    * 方法返回一个用reason拒绝的Promise。
     
