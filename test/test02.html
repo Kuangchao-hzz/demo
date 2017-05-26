@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  (function () {
+    var Singleton = function () {
+      var that = this
+      this.getInstance = function () {
+        console.log(1)
+        var instance = null;
+        console.log(instance)
+        return function () {
+          instance = '111';
+          return instance
+        }
+      }
+      this.conlog = function () {
+        console.log(that.getInstance())
+
+      }
+      setInterval(this.conlog(), 2000)
+    }
+  var singleton = new Singleton();
+
+  })()
+</script>
+</html>
