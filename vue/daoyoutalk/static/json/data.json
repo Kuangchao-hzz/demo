@@ -1,0 +1,322 @@
+{
+  "status": 1,
+  "msg": "1111",
+  "focusList": [
+    {
+      "url": "http:\/\/www.daoyoutalk.com\/images\/banner\/6_new.png",
+      "DYS": "DYS:\/\/traveList?cityId=55&cityName=富良野"
+    },
+    {
+      "url": "http:\/\/www.daoyoutalk.com\/images\/banner\/5_new.png",
+      "DYS": "DYS:\/\/traveList?cityId=52&cityName=冲绳"
+    },
+    {
+      "url": "http:\/\/www.daoyoutalk.com\/images\/banner\/4_new.png",
+      "DYS": "DYS:\/\/traveList?cityId=51&cityName=函馆"
+    },
+    {
+      "url": "http:\/\/www.daoyoutalk.com\/images\/banner\/1_new.png",
+      "DYS": "DYS:\/\/traveList?cityId=48&cityName=岐阜"
+    },
+    {
+      "url": "http:\/\/www.daoyoutalk.com\/images\/banner\/2_new.png",
+      "DYS": "DYS:\/\/traveList?cityId=49&cityName=旭川"
+    }
+  ],
+  "destinationList": [
+    {
+      "areaName": "关东地区",
+      "cityList": [
+        {
+          "id": 2,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/_2.png",
+          "name": "摩登·东京",
+          "DYS": "DYS:\/\/traveList?cityId=2&cityName=东京",
+          "viewNums": 111,
+          "recordNums": "112",
+          "restaurantNums": "201",
+          "weather": {
+            "temp": "9",
+            "weatherDesc": "晴天",
+            "weatherIcon": "01d"
+          },
+          "button": "1,1,1,0,0"
+        },
+        {
+          "id": 4,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/4.png",
+          "name": "富士·箱根",
+          "DYS": "DYS:\/\/traveList?cityId=4&cityName=箱根",
+          "viewNums": 22,
+          "recordNums": "22",
+          "restaurantNums": "0",
+          "weather": {
+            "temp": "7",
+            "weatherDesc": "晴天",
+            "weatherIcon": "01d"
+          },
+          "button": "1,0,0,0,0"
+        },
+        {
+          "id": 5,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/_5.png",
+          "name": "慢活·镰仓",
+          "DYS": "DYS:\/\/traveList?cityId=5&cityName=镰仓",
+          "viewNums": 6,
+          "recordNums": "6",
+          "restaurantNums": "0",
+          "weather": {
+            "temp": "9",
+            "weatherDesc": "晴天",
+            "weatherIcon": "01d"
+          },
+          "button": "1,1,0,0,0"
+        }
+      ]
+    },
+    {
+      "areaName": "关西地区",
+      "cityList": [
+        {
+          "id": 3,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/3.w.png",
+          "name": "元氣·大阪",
+          "DYS": "DYS:\/\/traveList?cityId=3&cityName=大阪",
+          "viewNums": 45,
+          "recordNums": "45",
+          "restaurantNums": "53",
+          "weather": {
+            "temp": "6",
+            "weatherDesc": "多云转晴",
+            "weatherIcon": "02d"
+          },
+          "button": "1,1,1,1,1"
+        },
+        {
+          "id": 37,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/37.png",
+          "name": "纯粹·京都",
+          "DYS": "DYS:\/\/traveList?cityId=37&cityName=京都",
+          "viewNums": 104,
+          "recordNums": "104",
+          "restaurantNums": "0",
+          "weather": {
+            "temp": "6",
+            "weatherDesc": "多云转晴",
+            "weatherIcon": "02d"
+          },
+          "button": "1,0,1,0,1"
+        },
+        {
+          "id": 45,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/45.png",
+          "name": "禅意·奈良",
+          "DYS": "DYS:\/\/traveList?cityId=45&cityName=奈良",
+          "viewNums": 45,
+          "recordNums": "45",
+          "restaurantNums": "11",
+          "weather": {
+            "temp": "6",
+            "weatherDesc": "多云转晴",
+            "weatherIcon": "02d"
+          },
+          "button": "1,1,1,1,0"
+        }
+      ]
+    },
+    {
+      "areaName": "中部地区",
+      "cityList": [
+        {
+          "id": 48,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/_48.png",
+          "name": "秘境·岐阜",
+          "DYS": "DYS:\/\/traveList?cityId=48&cityName=岐阜",
+          "viewNums": 11,
+          "recordNums": "11",
+          "restaurantNums": "0",
+          "weather": {
+            "temp": "1",
+            "weatherDesc": "多云转晴",
+            "weatherIcon": "02d"
+          },
+          "button": "1,0,0,0,0"
+        },
+        {
+          "id": 54,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/_54.png",
+          "name": "活力·名古屋",
+          "DYS": "DYS:\/\/traveList?cityId=54&cityName=名古屋",
+          "viewNums": 20,
+          "recordNums": "20",
+          "restaurantNums": "0",
+          "weather": {
+            "temp": "8",
+            "weatherDesc": "晴天",
+            "weatherIcon": "01d"
+          },
+          "button": "1,0,0,0,0"
+        },
+        {
+          "id": 53,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/53.png",
+          "name": "水都·三岛",
+          "DYS": "DYS:\/\/traveList?cityId=53&cityName=三岛",
+          "viewNums": 10,
+          "recordNums": "10",
+          "restaurantNums": "0",
+          "weather": {
+            "temp": "7",
+            "weatherDesc": "晴天",
+            "weatherIcon": "01d"
+          },
+          "button": "1,0,0,0,0"
+        }
+      ]
+    },
+    {
+      "areaName": "北海道",
+      "cityList": [
+        {
+          "id": 46,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/46.png",
+          "name": "雪国·札幌",
+          "DYS": "DYS:\/\/traveList?cityId=46&cityName=札幌",
+          "viewNums": 12,
+          "recordNums": "12",
+          "restaurantNums": "46",
+          "weather": {
+            "temp": "-1",
+            "weatherDesc": "多云转阴",
+            "weatherIcon": "04d"
+          },
+          "button": "1,1,0,0,0"
+        },
+        {
+          "id": 47,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/47.png",
+          "name": "浪漫·小樽",
+          "DYS": "DYS:\/\/traveList?cityId=47&cityName=小樽",
+          "viewNums": 5,
+          "recordNums": "5",
+          "restaurantNums": "25",
+          "weather": {
+            "temp": "-1",
+            "weatherDesc": "多云转阴",
+            "weatherIcon": "04d"
+          },
+          "button": "1,1,0,0,0"
+        },
+        {
+          "id": 51,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/51.png",
+          "name": "流光·函馆",
+          "DYS": "DYS:\/\/traveList?cityId=51&cityName=函馆",
+          "viewNums": 6,
+          "recordNums": "6",
+          "restaurantNums": "6",
+          "weather": {
+            "temp": "2",
+            "weatherDesc": "多云",
+            "weatherIcon": "03d"
+          },
+          "button": "1,1,0,0,0"
+        },
+        {
+          "id": 55,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/55.png",
+          "name": "花语·富良野",
+          "DYS": "DYS:\/\/traveList?cityId=55&cityName=富良野",
+          "viewNums": 6,
+          "recordNums": "6",
+          "restaurantNums": "7",
+          "weather": {
+            "temp": "-1",
+            "weatherDesc": "多云转阴",
+            "weatherIcon": "04d"
+          },
+          "button": "1,1,0,0,0"
+        },
+        {
+          "id": 49,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/49.png",
+          "name": "傲岸·旭川",
+          "DYS": "DYS:\/\/traveList?cityId=49&cityName=旭川",
+          "viewNums": 10,
+          "recordNums": "10",
+          "restaurantNums": "0",
+          "weather": {
+            "temp": "-1",
+            "weatherDesc": "多云转阴",
+            "weatherIcon": "04d"
+          },
+          "button": "1,0,0,0,0"
+        }
+      ]
+    },
+    {
+      "areaName": "九州·冲绳",
+      "cityList": [
+        {
+          "id": 52,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/52.png",
+          "name": "恋歌·冲绳",
+          "DYS": "DYS:\/\/traveList?cityId=52&cityName=冲绳",
+          "viewNums": 20,
+          "recordNums": "20",
+          "restaurantNums": "47",
+          "weather": {
+            "temp": "18",
+            "weatherDesc": "晴天",
+            "weatherIcon": "01d"
+          },
+          "button": "1,1,0,0,0"
+        },
+        {
+          "id": 50,
+          "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/city\/_50.png",
+          "name": "随性·福冈",
+          "DYS": "DYS:\/\/traveList?cityId=50&cityName=福冈",
+          "viewNums": 22,
+          "recordNums": "22",
+          "restaurantNums": "0",
+          "weather": {
+            "temp": "10",
+            "weatherDesc": "晴天",
+            "weatherIcon": "01d"
+          },
+          "button": "1,0,0,0,0"
+        }
+      ]
+    }
+  ],
+  "buttonList": [
+    {
+      "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/ico\/0.png",
+      "name": "每日签到",
+      "DYS": "DYS:\/\/signFunction"
+    },
+    {
+      "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/ico\/1.png",
+      "name": "点餐日语",
+      "DYS": "DYS:\/\/groceryStoreController"
+    },
+    {
+      "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/ico\/4.png",
+      "name": "游玩专辑",
+      "DYS": "DYS:\/\/topicController"
+    },
+    {
+      "image": "http:\/\/www.daoyoutalk.com\/images\/home\/new\/ico\/5.png",
+      "name": "用户帮助",
+      "DYS": "DYS:\/\/webView?url=http:\/\/www.daoyoutalk.com\/html\/readMe.php"
+    }
+  ],
+  "homeBanner": [
+    {
+      "img": "http:\/\/www.daoyoutalk.com\/images\/api\/home\/activity\/a3.png",
+      "DYS": "DYS:\/\/webView?url=http:\/\/www.daoyoutalk.com\/html\/activity\/three\/_index.html"
+    }
+  ],
+  "test": "测试中...."
+}
