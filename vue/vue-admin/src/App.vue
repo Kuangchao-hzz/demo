@@ -6,16 +6,17 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  mounted () {
+
+  }
 }
 </script>
 
 <style lang="scss" rel="stylesheet/scss" type="text/scss">
   @import "../static/css/reset.css";
   @import "./assets/color.scss";
-  html,body,#app{
-    width: 100%;
-    height: 100%;
-    color: #48576a;
+  body{
+    background: #5a5050;
   }
 </style>

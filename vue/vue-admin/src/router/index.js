@@ -3,353 +3,192 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+const Layout = resolve => require(['../components/Layout/layout.vue'], resolve)
+
 export const includeRouterMap = [
   {
-    path: '/login',
-    component: resolve => require(['../components/Login/Login.vue'], resolve)
-  }]
-
-export const asyncRouterMap = [
-  {
     path: '/',
-    name: '主页',
-    component: resolve => require(['../components/Layout/layout.vue'], resolve),
+    name: '布局页',
+    component: Layout,
+    redirect: '/visa/visa'
+  }, {
+    path: '/login',
+    name: '登录页',
+    component: resolve => require(['../components/Login/Login.vue'], resolve),
     children: [
-      {
-        path: '/visa',
-        name: '前台组',
-        component: resolve => require(['../components/group-visa/index.vue'], resolve),
-        redirect: '/visa/index',
-        children: [{
-          path: 'index',
-          name: '签证管理',
-          component: resolve => require(['../components/group-visa/childrens/visa.vue'], resolve)
-        }]
-      }
+
     ]
-  }
-]
+  }]
 
 export default new Router({
   routes: includeRouterMap
 })
 
-/*export const asyncRouterMap = [
+export const asyncRouterMap = [
   {
-    path: '/',
-    name: '主页',
-    component: resolve => require(['../components/Layout/layout.vue'], resolve),
-    redirect: '/visa/express',
+    path: '/visa',
+    name: '前台组',
+    icon: 'el-icon-message',
+    component: Layout,
     children: [
       {
         path: 'visa',
-        name: 'visa',
-        meta: {
-          name: '前台组',
-          index: 'visa'
-        },
+        name: '签证管理',
+        icon: 'el-icon-message',
+        component: resolve => require(['../components/group-visa/childrens/visa.vue'], resolve)
+      }, {
+        path: 'express',
+        name: '快递管理',
+        icon: 'el-icon-message',
+        component: resolve => require(['../components/group-visa/childrens/expressNo.vue'], resolve)
+      }, {
+        path: 'count',
+        name: '业绩管理',
+        icon: 'el-icon-message',
+        component: resolve => require(['../components/group-visa/index.vue'], resolve)
+      }
+    ]
+  },
+  {
+    path: '/material',
+    name: '材料组',
+    icon: 'el-icon-message',
+    component: resolve => require(['../components/group-visa/index.vue'], resolve),
+    children: [
+      {
+        path: '/material/japan',
+        name: '日本组',
         icon: 'el-icon-message',
         component: resolve => require(['../components/group-visa/index.vue'], resolve),
         children: [
           {
             path: 'index',
-            name: 'index',
-            icon: 'el-icon-message',
-            meta: {
-              name: '前台组',
-              index: '/visa/index'
-            },
+            name: '签证管理',
             component: resolve => require(['../components/group-visa/index.vue'], resolve)
           }, {
-            path: 'express',
-            name: 'express',
-            icon: 'el-icon-message',
-            meta: {
-              name: '快递管理',
-              index: '/visa/express'
-            },
-            component: resolve => require(['../components/group-visa/visa.vue'], resolve)
+            path: 'daizhuangCount',
+            name: '装袋统计管理',
+            component: resolve => require(['../components/group-visa/index.vue'], resolve)
           }, {
             path: 'count',
-            name: 'count',
-            icon: 'el-icon-message',
-            meta: {
-              name: '业绩管理',
-              index: '/visa/count'
-            },
-            component: resolve => require(['../components/Login/Login.vue'], resolve)
-          }
-        ]
-      },
-      {
-        path: 'material',
-        icon: 'el-icon-message',
-        meta: {
-          name: '材料组',
-          index: '/material'
-        },
-        component: resolve => require(['../components/group-visa/index.vue'], resolve),
-        children: [
-          {
-            path: 'japan',
-            icon: 'el-icon-message',
-            meta: {
-              name: '日本组',
-              index: '/material/japan'
-            },
-            component: resolve => require(['../components/group-visa/index.vue'], resolve),
-            children: [
-              {
-                path: 'index',
-                meta: {
-                  name: '签证管理',
-                  index: '/material/japan/index'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              }, {
-                path: 'daizhuangCount',
-                meta: {
-                  name: '装袋统计管理',
-                  index: '/material/japan/daizhuangCount'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              }, {
-                path: 'count',
-                meta: {
-                  name: '业绩统计',
-                  index: '/material/japan/count'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              }, {
-                path: 'hotel',
-                meta: {
-                  name: '酒店模板',
-                  index: '/material/japan/hotel'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              }, {
-                path: 'trip',
-                meta: {
-                  name: '行程模板',
-                  index: '/material/japan/trip'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              }, {
-                path: 'flight',
-                meta: {
-                  name: '航班模板',
-                  index: '/material/japan/flight'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              }
-            ]
-          }, {
-            path: 'thailand',
-            icon: 'el-icon-message',
-            meta: {
-              name: '泰国组',
-              index: '/material/thailand'
-            },
-            component: resolve => require(['../components/group-visa/visa.vue'], resolve),
-            children: [
-              {
-                path: 'index',
-                icon: 'el-icon-message',
-                meta: {
-                  name: '签证管理',
-                  index: '/material/thailand/index'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              }, {
-                path: 'count',
-                icon: 'el-icon-message',
-                meta: {
-                  name: '业绩管理',
-                  index: '/material/thailand/count'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              }
-            ]
-          }
-        ]
-      },
-      {
-        path: 'send',
-        icon: 'el-icon-message',
-        meta: {
-          name: '送签组',
-          index: '/send'
-        },
-        component: resolve => require(['../components/group-visa/index.vue'], resolve),
-        children: [
-          {
-            path: 'japan',
-            icon: 'el-icon-message',
-            meta: {
-              name: '日本组',
-              index: '/send/japan'
-            },
-            component: resolve => require(['../components/group-visa/index.vue'], resolve),
-            children: [
-              {
-                path: 'index',
-                meta: {
-                  name: '签证管理',
-                  index: 'send/japan/index'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              }
-            ]
-          }, {
-            path: 'thailand',
-            icon: 'el-icon-message',
-            meta: {
-              name: '泰国组',
-              index: '/send/thailand'
-            },
-            component: resolve => require(['../components/group-visa/index.vue'], resolve),
-            children: [
-              {
-                path: 'index',
-                meta: {
-                  name: '签证管理',
-                  index: '/send/thailand/index'
-                },
-                icon: 'el-icon-message',
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              }
-            ]
-          }, {
-            path: 'other',
-            meta: {
-              name: '其他组',
-              index: '/send/other'
-            },
-            icon: 'el-icon-message',
-            component: resolve => require(['../components/group-visa/index.vue'], resolve),
-            children: [
-              {
-                path: 'index',
-                icon: 'el-icon-message',
-                meta: {
-                  name: '签证管理',
-                  index: '/send/other/index'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              }
-            ]
-          }
-        ]
-      },
-      {
-        path: 'after',
-        icon: 'el-icon-message',
-        meta: {
-          name: '售后组',
-          index: '/after'
-        },
-        component: resolve => require(['../components/group-visa/index.vue'], resolve),
-        children: [
-          {
-            path: 'invoice',
-            icon: 'el-icon-message',
-            meta: {
-              name: '发票管理',
-              index: '/after/invoice'
-            },
+            name: '业绩统计',
             component: resolve => require(['../components/group-visa/index.vue'], resolve)
-          },
+          }, {
+            path: 'hotel',
+            name: '酒店模板',
+            component: resolve => require(['../components/group-visa/index.vue'], resolve)
+          }, {
+            path: 'trip',
+            name: '行程模板',
+            component: resolve => require(['../components/group-visa/index.vue'], resolve)
+          }, {
+            path: 'flight',
+            name: '航班模板',
+            component: resolve => require(['../components/group-visa/index.vue'], resolve)
+          }
+        ]
+      }, {
+        path: '/material/thailand',
+        name: '泰国组',
+        icon: 'el-icon-message',
+        component: resolve => require(['../components/group-visa/index.vue'], resolve),
+        children: [
           {
-            path: 'japan',
-            name: '日本组',
+            path: 'index',
+            name: '签证管理',
             icon: 'el-icon-message',
-            meta: {
-              name: '发票管理',
-              index: '/after/japan'
-            },
-            component: resolve => require(['../components/group-visa/index.vue'], resolve),
-            children: [
-              {
-                path: 'index',
-                icon: 'el-icon-message',
-                meta: {
-                  name: '签证管理',
-                  index: '/after/japan/index'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              },
-              {
-                path: 'index',
-                icon: 'el-icon-message',
-                meta: {
-                  name: '业绩统计',
-                  index: '/after/japan/count'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              }
-            ]
-          },
-          {
-            path: 'thailand',
+            component: resolve => require(['../components/group-visa/index.vue'], resolve)
+          }, {
+            path: 'count',
+            name: '业绩管理',
             icon: 'el-icon-message',
-            meta: {
-              name: '泰国组',
-              index: '/after/thailand'
-            },
-            component: resolve => require(['../components/group-visa/index.vue'], resolve),
-            children: [
-              {
-                path: 'index',
-                icon: 'el-icon-message',
-                meta: {
-                  name: '签证管理',
-                  index: '/after/thailand/index'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              },
-              {
-                path: 'index',
-                icon: 'el-icon-message',
-                meta: {
-                  name: '业绩统计',
-                  index: '/after/thailand/count'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              }
-            ]
-          },
-          {
-            path: 'other',
-            icon: 'el-icon-message',
-            meta: {
-              name: '其他组',
-              index: '/after/other'
-            },
-            component: resolve => require(['../components/group-visa/index.vue'], resolve),
-            children: [
-              {
-                path: 'index',
-                icon: 'el-icon-message',
-                meta: {
-                  name: '签证管理',
-                  index: '/after/other/index'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              },
-              {
-                path: 'index',
-                icon: 'el-icon-message',
-                meta: {
-                  name: '业绩统计',
-                  index: '/after/other/index'
-                },
-                component: resolve => require(['../components/group-visa/index.vue'], resolve)
-              }
-            ]
+            component: resolve => require(['../components/group-visa/index.vue'], resolve)
           }
         ]
       }
     ]
+  },
+  {
+    path: '/send',
+    name: '送签组',
+    icon: 'el-icon-message',
+    component: resolve => require(['../components/group-visa/index.vue'], resolve),
+    children: [
+      {
+        path: '/send/japan',
+        name: '日本组',
+        icon: 'el-icon-message',
+        component: resolve => require(['../components/group-visa/index.vue'], resolve),
+        children: [
+          {
+            path: 'visa',
+            name: '签证管理',
+            component: resolve => require(['../components/group-visa/childrens/visa.vue'], resolve)
+          }
+        ]
+      }, {
+        path: 'thailand',
+        name: '泰国组',
+        icon: 'el-icon-message',
+        component: resolve => require(['../components/group-visa/index.vue'], resolve),
+        children: [
+          {
+            path: 'index',
+            name: '签证管理',
+            icon: 'el-icon-message',
+            component: resolve => require(['../components/group-visa/index.vue'], resolve)
+          }
+        ]
+      }, {
+        path: 'thailand',
+        name: '其他组',
+        icon: 'el-icon-message',
+        component: resolve => require(['../components/group-visa/index.vue'], resolve),
+        children: [
+          {
+            path: 'index',
+            name: '签证管理',
+            icon: 'el-icon-message',
+            component: resolve => require(['../components/group-visa/index.vue'], resolve)
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/after',
+    name: '售后组',
+    icon: 'el-icon-message',
+    component: resolve => require(['../components/group-visa/index.vue'], resolve)
+  },
+  {
+    path: '/service',
+    name: '客服组',
+    icon: 'el-icon-message',
+    component: resolve => require(['../components/group-visa/index.vue'], resolve)
+  },
+  {
+    path: '/system',
+    name: '系统管理',
+    icon: 'el-icon-message',
+    component: resolve => require(['../components/group-visa/index.vue'], resolve)
+  },
+  {
+    path: '/taobao',
+    name: '淘宝管理',
+    icon: 'el-icon-message',
+    component: resolve => require(['../components/group-visa/index.vue'], resolve)
+  },
+  {
+    path: '/internal',
+    name: '内部操作',
+    icon: 'el-icon-message',
+    component: resolve => require(['../components/group-visa/index.vue'], resolve)
+  },
+  {
+    path: '/money',
+    name: '财务管理',
+    icon: 'el-icon-message',
+    component: resolve => require(['../components/group-visa/index.vue'], resolve)
   }
-]*/
-
+]

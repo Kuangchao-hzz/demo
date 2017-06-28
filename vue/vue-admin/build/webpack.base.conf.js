@@ -1,3 +1,4 @@
+
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
@@ -9,7 +10,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: ['babel-polyfill', './src/main.js']
   },
   output: {
     path: config.build.assetsRoot,

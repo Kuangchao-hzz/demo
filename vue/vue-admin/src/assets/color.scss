@@ -11,6 +11,16 @@
   cursor: pointer;
   color: #fff;
 }
+.color-green{
+  background: #1ab394 !important;
+  border: 1px #1ab394 solid !important;
+  &:active {
+    background: #1ab394 !important;
+  }
+  &:hover {
+    background: #1ac2a3 !important;
+  }
+}
 .margin-center-5{
   margin: 0 5px;
 }

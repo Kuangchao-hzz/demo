@@ -5,7 +5,7 @@
       <div class="ms-login">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
           <el-form-item prop="username">
-            <el-input v-model="ruleForm.username" placeholder="username"></el-input>
+            <el-input v-model="ruleForm.account" placeholder="username"></el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input type="password" placeholder="password" v-model="ruleForm.password" @keyup.enter.native="submitForm('ruleForm')"></el-input>
@@ -20,16 +20,16 @@
 </template>
 
 <script>
-  import api from '@/api/index'
+  import api from '../../api/login.js'
   export default {
     data: function () {
       return {
         ruleForm: {
-          username: 'hzzaiyourlive@qq.com',
+          account: 'he',
           password: '123456'
         },
         rules: {
-          username: [
+          account: [
             { required: true, message: '请输入用户名', trigger: 'blur' }
           ],
           password: [
@@ -41,13 +41,20 @@
     methods: {
       submitForm (formName) {
         var self = this
-        console.log(api)
         this.$refs[formName].validate(valid => {
           if (valid) {
-            api.get_routerAuthority().then((response) => {
-              this.$store.dispatch('LoginByUser', response)
+            api.api_login(self.ruleForm).then(function (response) {
+                if(response.data.status == 1){
+                  self.$store.dispatch('LoginByUser', self.ruleForm).then(()   => {
+                    self.$router.push('/')
+                  })
+
+                }else {
+                  alert(response.data.msg)
+                }
+            }).catch((err) => {
+              alert(err)
             })
-            this.$router.push('/visa')
           } else {
             console.log('error submit!!')
             return false

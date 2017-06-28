@@ -1,12 +1,12 @@
 <template>
   <div>
     <template v-for="item in routes">
-      <el-menu-item v-if="!item.children" :index="item.meta.index">{{item.meta.name}}</el-menu-item>
-      <el-submenu v-else :index="item.meta.index">
-        <template slot="title"><i :class="item.icon"></i>{{item.meta.name}}</template>
+      <el-menu-item v-if="!item.children" :index="item.path">{{item.name}}</el-menu-item>
+      <el-submenu v-else :index="item.path">
+        <template slot="title"><i :class="item.icon"></i>{{item.name}}</template>
         <template v-for="child in item.children">
           <sidebar-item v-if="child.children" :routes="[child]"></sidebar-item>
-          <el-menu-item v-else :index="child.meta.index" :data-index="child.meta.index">{{child.meta.name}}</el-menu-item>
+          <el-menu-item v-else :index="item.path + '/' + child.path">{{child.name}}</el-menu-item>
         </template>
       </el-submenu>
     </template>
