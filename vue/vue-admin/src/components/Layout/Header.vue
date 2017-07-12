@@ -5,7 +5,7 @@
     <div class="user-info">
       <el-dropdown trigger="click" @command="handleCommand" class="el-btn-link">
         <span class="el-dropdown-link">
-            <img class="user-logo" src="http://work.omwteam.com/static/img/img.2aab7b4.jpg">
+            <img class="user-logo" src="http://julong.daoyoutalk.com/public/staff/20170310/14891394427794.jpg">
             {{username}}
         </span>
         <span class="el-logout-link">
@@ -47,9 +47,9 @@
     position: relative;
     box-sizing: border-box;
     width: 100%;
-    height: 70px;
+    height: 40px;
     font-size: 22px;
-    line-height: 70px;
+    line-height: 40px;
     color: #fff;
     background: #00d1b2;
     .logo {
@@ -73,9 +73,10 @@
           .user-logo {
             position: absolute;
             left: 0;
-            top: 15px;
-            width: 40px;
-            height: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
           }
         }

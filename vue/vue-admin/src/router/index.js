@@ -28,13 +28,13 @@ export const asyncRouterMap = [
   {
     path: '/visa',
     name: '前台组',
-    icon: 'el-icon-message',
+    icon: 'icon icon-profile',
     component: Layout,
     children: [
       {
         path: 'visa',
         name: '签证管理',
-        icon: 'el-icon-message',
+        icon: 'icon icon-file-text2',
         component: resolve => require(['../components/group-visa/childrens/visa.vue'], resolve)
       }, {
         path: 'express',
@@ -52,7 +52,7 @@ export const asyncRouterMap = [
   {
     path: '/material',
     name: '材料组',
-    icon: 'el-icon-message',
+    icon: 'icon icon-newspaper',
     component: resolve => require(['../components/group-visa/index.vue'], resolve),
     children: [
       {

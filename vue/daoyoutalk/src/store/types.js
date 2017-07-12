@@ -1,3 +1,5 @@
-/**
- * Created by Administrator on 2017/6/5.
- */
+export const storeController = {
+  setHeadToggle: 'CONTROLLER_HEADTOGGLE',
+  setFootToggle: 'CONTROLLER_FOOTTOGGLE'
+}
+

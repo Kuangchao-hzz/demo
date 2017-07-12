@@ -1,12 +1,12 @@
 <template>
   <div>
     <template v-for="item in routes">
-      <el-menu-item v-if="!item.children" :index="item.path">{{item.name}}</el-menu-item>
+      <el-menu-item v-if="!item.children" :index="item.path"><i :class="item.icon" class="menu-icon"></i>{{item.name}}</el-menu-item>
       <el-submenu v-else :index="item.path">
-        <template slot="title"><i :class="item.icon"></i>{{item.name}}</template>
+        <template slot="title"><i :class="item.icon" class="menu-icon"></i>{{item.name}}</template>
         <template v-for="child in item.children">
           <sidebar-item v-if="child.children" :routes="[child]"></sidebar-item>
-          <el-menu-item v-else :index="item.path + '/' + child.path">{{child.name}}</el-menu-item>
+          <el-menu-item v-else :index="item.path + '/' + child.path"><i :class="child.icon" class="menu-icon small"></i>{{child.name}}</el-menu-item>
         </template>
       </el-submenu>
     </template>
@@ -37,6 +37,14 @@
   }
 </script>
 
-<style lang="scss" rel="stylesheet/scss" type="text/scss">
-
+<style lang="scss" rel="stylesheet/scss" type="text/scss" scope>
+  .menu-icon{
+    margin-right: 10px;
+    font-size: 18px;
+    position: relative;
+    top: 2px;
+    small{
+      font-size: 14px;
+    }
+  }
 </style>

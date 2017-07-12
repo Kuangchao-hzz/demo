@@ -1,9 +1,14 @@
 
-import commonHeader from '../components/include/header.vue'
+import includeHeader from './header.vue'
+import includeFooter from './footer.vue'
+import selectSort from './select-sort.vue'
+import HzzSelect from './select/select.vue'
 
-/* eslint-disable no-undef */
 const install = function (Vue, config = {}) {
-  Vue.component(commonHeader.name, commonHeader)
+  Vue.component(includeHeader.name, includeHeader)
+  Vue.component(includeFooter.name, includeFooter)
+  Vue.component(HzzSelect.name, HzzSelect)
+  Vue.component(selectSort.name, selectSort)
 }
 
 if (typeof window !== 'undefined' && window.Vue) {
@@ -11,6 +16,5 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  install,
-  commonHeader
+  install
 }

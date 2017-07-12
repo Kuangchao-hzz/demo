@@ -10,7 +10,6 @@ import My from '@/components/pages/my/index'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
   routes: [
     {
       path: '/',

@@ -1,23 +1,20 @@
 <template>
-  <div id="app">
-    <miHeader></miHeader>
+  <div id="app" ref="bodySize">
+    <include-header></include-header>
     <router-view></router-view>
-    <miFooter></miFooter>
+    <include-footer></include-footer>
   </div>
 </template>
 
 <script>
-  import miHeader from '@/components/include/header'
-  import miFooter from '@/components/include/footer'
   export default {
     data () {
       return {
-        active: 'tab-container2'
+
       }
     },
-    components: {
-      miHeader,
-      miFooter
+    mounted () {
+      this.$store.state.defaultBodySize = this.$refs['bodySize'].getBoundingClientRect().height
     }
   }
 </script>

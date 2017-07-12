@@ -1,25 +1,25 @@
 const include = {
   state: {
     tableWidth: '',
-    tableHeight: ''
+    tableHeight: '',
+    containerHeight: '',
+    searchHeight: ''
   },
   mutations: {
-    SET_INNERWIDTH ($state, $width) {
-      $state.tableWidth = $width
+    SET_CONTAINERHEIGHT ($state, $height) {
+      $state.containerHeight = $height
     },
-    SET_INNERHEIGHT ($state, $height) {
-      $state.tableHeight = $height
+    SET_SEARCHHEIGHT ($state, $height) {
+      $state.searchHeight = $height
     },
   },
   actions: {
     captureBrowserSize ({ commit }) {
       return new Promise(resolve => {
-        if(window.innerHeight <= '800'){
-          commit('SET_INNERHEIGHT', 500)
-        } else {
-          commit('SET_INNERHEIGHT', 650)
-        }
-        commit('SET_INNERWIDTH', window.innerWidth)
+        let $clientHeight = window.document.documentElement.clientHeight
+        // 除头部外内容高度
+        commit('SET_CONTAINERHEIGHT', $clientHeight - 80)
+        commit('SET_SEARCHHEIGHT', 180)
         resolve()
       })
     }

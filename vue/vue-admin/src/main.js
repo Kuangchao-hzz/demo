@@ -22,13 +22,10 @@ Vue.use(AMap)
 
 router.addRoutes(asyncRouterMap)
 Vue.config.productionTip = false
-AMap.initAMapApiLoader({
-  key: '4f77fb55df2ea2d761581bf83ff57acc',
-  plugin: ['Geocoder']
-})
 
+// webpack 有global关键字 定义全局变量
+global.swal = Swal
 
-Vue.prototype.swal = Swal
 router.beforeEach((to, from, next) => {
   if(store.state.include.tableWidth == '' && store.state.include.tableHeight == ''){
     store.dispatch('captureBrowserSize')

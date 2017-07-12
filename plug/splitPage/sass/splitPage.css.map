@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AACA,UAAS;EACP,KAAK,EAAC,IAAI;EACV,MAAM,EAAC,IAAI",
+"sources": ["splitPage.scss"],
+"names": [],
+"file": "splitPage.css"
+}

@@ -1,23 +1,27 @@
 <template>
-  <mt-tabbar v-model="selected" :fixed="true">
-    <mt-tab-item id="目的地">
-      <router-link to="/home" tag="div">目的地</router-link>
+  <mt-tabbar v-if="storeToggle" v-model="selected" :fixed="true" ref="footSize">
+    <mt-tab-item id="home">
+      <img  slot="icon" src="http://www.daoyoutalk.com/_test/daoyoutalk/img/icon/tab_homepage_s@2x.png">
+      目的地
     </mt-tab-item>
-    <mt-tab-item id="旅游圈">
-      <router-link to="/friendCircle" tag="div">旅游圈</router-link>
+    <mt-tab-item id="friendCircle">
+      <img  slot="icon" src="http://www.daoyoutalk.com/_test/daoyoutalk/img/icon/tab_homepage_s@2x.png">
+      旅游圈
     </mt-tab-item>
-    <mt-tab-item id="锦囊">
-      <router-link to="/plan" tag="div">锦囊</router-link>
+    <mt-tab-item id="plan">
+      <img  slot="icon" src="http://www.daoyoutalk.com/_test/daoyoutalk/img/icon/tab_homepage_s@2x.png">
+      锦囊
     </mt-tab-item>
-    <mt-tab-item id="百宝箱">
-      <router-link to="/more" tag="div">百宝箱</router-link>
+    <mt-tab-item id="more">
+      <img  slot="icon" src="http://www.daoyoutalk.com/_test/daoyoutalk/img/icon/tab_homepage_s@2x.png">
+      百宝箱
     </mt-tab-item>
-    <mt-tab-item id="我的">
-      <router-link to="/my" tag="div">我的</router-link>
+    <mt-tab-item id="my">
+      <img  slot="icon" src="http://www.daoyoutalk.com/_test/daoyoutalk/img/icon/tab_homepage_s@2x.png">
+      我的
     </mt-tab-item>
   </mt-tabbar>
 </template>
-
 <script>
   /*
    * ===================================================
@@ -30,14 +34,38 @@
    * ===================================================
    * */
   export default {
+    name: 'include-footer',
     data () {
       return {
-        selected: '目的地'
+        selected: this.getCurPath()
+      }
+    },
+    computed: {
+      storeToggle () {
+        return this.$store.state.footToggle
+      }
+    },
+    mounted () {
+      if (this.storeToggle) {
+        this.$store.state.defaultFootSize = this.$refs['footSize'].$el.getBoundingClientRect().height
+      }
+    },
+    methods: {
+      getCurPath () {
+        var curPath = this.$route.path
+        return curPath.slice(curPath.lastIndexOf('/') + 1, curPath.length)
+      }
+    },
+    watch: {
+      'selected' () {
+        this.$router.push(this.selected)
       }
     }
   }
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-
+  .mint-tabbar{
+    box-shadow: 0 0 10px rgba(0,0,0,.5);
+  }
 </style>

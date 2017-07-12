@@ -6,7 +6,9 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import VueScroller from 'vue-scroller'
 import App from './App'
 import router from './router'
-import axios from 'axios'
+import store from './store/index'
+import axios from './api/index'
+import Include from './components/include/index'
 
 /*
  * =========================================
@@ -19,14 +21,16 @@ import 'animate.css/animate.min.css'
 
 Vue.config.productionTip = false
 Vue.use(MintUI)
+Vue.use(Include)
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueScroller)
-Vue.prototype.$axios = axios
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
+  axios,
   template: '<App/>',
   components: { App }
 })

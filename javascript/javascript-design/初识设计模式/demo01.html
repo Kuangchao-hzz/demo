@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    var Static = function (id, name) {
+        this.id = id;
+        //判断this在执行过程中是不是属于Smoke，如果是说明是new过的  0.0
+        if(this instanceof Static){
+            this.setName = function(name){
+                this.name = name
+                return this
+            }
+            this.getName = function(){
+                return this.name
+            }
+            this.information = function () {
+                console.log(this.id)
+                return this
+            }
+        }
+
+    }
+
+    var static = new Static('a'); // 如果没有使用new 则这个Static里面的this指向的window对象
+    var b = new Static('b');
+    static.id = 'foo';
+    static.information()
+    b.information()
+</script>
+</html>

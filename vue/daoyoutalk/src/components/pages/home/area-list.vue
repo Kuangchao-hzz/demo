@@ -12,18 +12,18 @@
         </div>
         <div class="area-bg"></div>
         <div class="area-btn">
-          <div class="btn-item animated bounceIn" v-if="place.button.slice(0,1) == 1">
+          <router-link to="/home/attractions" tag="div" class="btn-item animated bounceIn" v-if="place.button.slice(0,1) == 1">
             <img src="http://daoyoutalk.com/_test/daoyoutalk/img/icon/find_pot@2x.png">
-          </div>
-          <div class="btn-item animated bounceIn" v-if="place.button.slice(1,2) == 1">
+          </router-link>
+          <router-link to="/home/attractions" tag="div" class="btn-item animated bounceIn" v-if="place.button.slice(1,2) == 1">
             <img src="http://daoyoutalk.com/_test/daoyoutalk/img/icon/go_shopping@2x.png">
-          </div>
-          <div class="btn-item animated bounceIn" v-if="place.button.slice(2,3) == 1">
+          </router-link >
+          <router-link to="/home/attractions" tag="div" class="btn-item animated bounceIn" v-if="place.button.slice(2,3) == 1">
             <img src="http://daoyoutalk.com/_test/daoyoutalk/img/icon/lookingfor_food@2x.png">
-          </div>
-          <div class="btn-item animated bounceIn" v-if="place.button.slice(4,5) == 1">
+          </router-link>
+          <router-link to="/home/attractions" tag="div" class="btn-item animated bounceIn" v-if="place.button.slice(4,5) == 1">
             <img src="http://daoyoutalk.com/_test/daoyoutalk/img/icon/rent_kimono@2x.png">
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -52,6 +52,7 @@
   $btnWidth:65px;$btnHeight:65px;
   .area-list{
     overflow: hidden;
+    padding-bottom: 10px;
     .area-item{
       .area-title{
         line-height: 34px;

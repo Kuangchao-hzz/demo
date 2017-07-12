@@ -23,6 +23,7 @@
       </div>
       <courses-recommend :random-recommend-data="randomRecommend"></courses-recommend>
     </scroller>
+
     <transition name="fade">
       <router-view></router-view>
     </transition>

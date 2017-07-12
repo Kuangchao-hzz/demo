@@ -5,29 +5,26 @@
   <title>Title</title>
 </head>
 <body>
-
+<marquee direction=up behavior=scroll loop=3 scrollamount=1 scrolldelay=10 bgcolor=#ccffff height=150 width=15% hspace=20 vspace=10 onmouseover=this.stop() onmouseout=this.start()><P align=center>此处输入滚动内容</P></marquee>
 </body>
 <script>
-  (function () {
-    var Singleton = function () {
-      var that = this
-      this.getInstance = function () {
-        console.log(1)
-        var instance = null;
-        console.log(instance)
-        return function () {
-          instance = '111';
-          return instance
-        }
+  window.onload = function () {
+    var $file = document.createElement('input');
+    $file.type = 'file';
+    document.querySelector('body').appendChild($file);
+    $file.addEventListener('change', function () {
+      console.log(this.files[0])
+      var file = this.files[0]
+      var img = document.createElement('img');
+      img.src = window.URL.createObjectURL(file);
+      /*var reader = new FileReader();
+      reader.onload = function(e) {
+        img.src = e.target.result;
+        console.log(img.src)
       }
-      this.conlog = function () {
-        console.log(that.getInstance())
-
-      }
-      setInterval(this.conlog(), 2000)
-    }
-  var singleton = new Singleton();
-
-  })()
+      reader.readAsDataURL(file);*/
+      document.querySelector('body').appendChild(img);
+    })
+  }
 </script>
 </html>

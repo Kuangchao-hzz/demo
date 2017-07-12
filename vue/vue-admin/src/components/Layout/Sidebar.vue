@@ -1,6 +1,7 @@
 <template>
   <div class="sidebar">
     <el-menu theme="dark"
+             :default-active="this.$route.path"
       router>
       <sidebarItem :routes="routes"></sidebarItem>
     </el-menu>
@@ -27,21 +28,20 @@
 
 <style lang="scss" rel="stylesheet/scss" type="text/scss">
   .sidebar{
-    display: block;
-    position: absolute;
     overflow: hidden;
     width: 180px;
-    left: 0;
-    top: 70px;
-    bottom:0;
-    z-index: 1;
+    height: 100%;
+    z-index: 9999;
+    position: absolute;
+    left:0;
+    top: 0;
     background: #2E363F;
     >.el-menu{
       width: 197px;
       overflow-y: scroll;
       position: absolute;
       top: 0;
-      right: -17px;
+      left: 0;
     }
   > ul {
       height:100%;

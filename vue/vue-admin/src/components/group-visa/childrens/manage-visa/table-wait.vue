@@ -2,17 +2,20 @@
   <div>
     <el-table
       :data="tableData.list"
-      :height="tabHeight"
+      :height="tableHeight"
+      :max-height="tableHeight"
       border
       style="width: 100%"
       :data-time="reset">
       <el-table-column
-        prop="id"
         label="编号"
         align="center"
         fixed
         class-name="color-details"
         width="80">
+        <template scope="scope">
+          <p @click="serialNumberIsShow(scope.row.id)">{{scope.row.id}}</p>
+        </template>
       </el-table-column>
       <el-table-column
         prop="orderSource.source"
@@ -28,10 +31,10 @@
         <template scope="scope">
           <p>
             <span>{{scope.row.main.name + ' '}}</span>
-            <span class="color-details">{{scope.row.main.passportNo}}</span></p>
+            <span class="color-details" @click="showPassport(scope.row.main.passportNo)">{{scope.row.main.passportNo}}</span></p>
           <p v-for="item in scope.row.follow">
             <span><small>{{ item.name }}</small></span>
-            <span class="color-details"><small>{{ item.passportNo }}</small></span>
+            <span class="color-details" @click="showPassport(item.passportNo)"><small>{{ item.passportNo }}</small></span>
             <span class="color-danger"><small>{{ item.show ? item.show : ''}}</small></span>
           </p>
         </template>
@@ -109,7 +112,11 @@
       return {
         tableData: [],
         tableDataNum: null,
-        tabHeight: this.$store.state.include.tableHeight
+      }
+    },
+    computed: {
+      tableHeight () {
+        return this.$store.getters.tableHeight
       }
     },
     props: {
@@ -119,6 +126,12 @@
       this.getTableData()
     },
     methods: {
+      showPassport ($passportNo) {
+        this.$store.dispatch('handlerPassportInfo', {
+          type: true,
+          passportNo: $passportNo
+        })
+      },
       getTableData ($page) {
         let $params = {
           page: $page || 1
@@ -132,6 +145,12 @@
         let butArr = $button.split(',')
         return butArr[$index] == 1
       },
+      serialNumberIsShow ($id) {
+        this.$store.dispatch('handlerSerialNumber', {
+          type: true,
+          id: $id
+        })
+      }
     },
     watch: {
       reset () {
