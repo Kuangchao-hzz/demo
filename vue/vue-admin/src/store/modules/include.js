@@ -3,7 +3,8 @@ const include = {
     tableWidth: '',
     tableHeight: '',
     containerHeight: '',
-    searchHeight: ''
+    searchHeight: '',
+    domain: ''
   },
   mutations: {
     SET_CONTAINERHEIGHT ($state, $height) {
@@ -12,6 +13,9 @@ const include = {
     SET_SEARCHHEIGHT ($state, $height) {
       $state.searchHeight = $height
     },
+    SET_DOMAIN ($state, $domain) {
+      $state.domain = $domain
+    }
   },
   actions: {
     captureBrowserSize ({ commit }) {
@@ -22,6 +26,10 @@ const include = {
         commit('SET_SEARCHHEIGHT', 180)
         resolve()
       })
+    },
+    currentDomain ({ commit }) {
+      let $domain = document.domain
+      commit('SET_DOMAIN', 'julong')
     }
   }
 }

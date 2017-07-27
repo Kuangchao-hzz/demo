@@ -24,6 +24,7 @@
   export default {
     data: function () {
       return {
+        setCurrentPath: '/',
         ruleForm: {
           account: 'he',
           password: '123456'
@@ -45,10 +46,9 @@
           if (valid) {
             api.api_login(self.ruleForm).then(function (response) {
                 if(response.data.status == 1){
-                  self.$store.dispatch('LoginByUser', self.ruleForm).then(()   => {
+                  self.$store.dispatch('LoginByUser', self.ruleForm).then(() => {
                     self.$router.push('/')
                   })
-
                 }else {
                   alert(response.data.msg)
                 }

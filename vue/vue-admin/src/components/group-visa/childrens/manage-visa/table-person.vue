@@ -47,39 +47,32 @@
         label="送签日期">
       </el-table-column>
       <el-table-column
-        prop="visaType.type"
         align="center"
         min-width="180"
         label="签证类型">
+        <template scope="scope">
+          <el-input v-if="scope.row.sendTime !== ''" size="small" v-model="waitHandleRow.list[scope.$index].visaType.type"></el-input>
+          <span v-if="scope.row.sendTime === ''">{{scope.row.visaType.type}}</span>
+        </template>
       </el-table-column>
       <el-table-column
         align="center"
         min-width="280"
         label="操作信息">
-        <template scope="scope">
-          <el-row type="flex" justify="center">
-            <el-col :span="4" v-if="buttonIsShow(scope.row.button, 0)">
-              <el-button class="color-dispose" type="info" size="mini">查看</el-button>
-            </el-col>
-            <el-col :span="4" v-if="buttonIsShow(scope.row.button, 1)">
-              <el-button class="color-dispose" type="info" size="mini">编辑</el-button>
-            </el-col>
-            <el-col :span="4" v-if="buttonIsShow(scope.row.button, 2)">
-              <el-button class="color-dispose" type="info" size="mini">复制</el-button>
-            </el-col>
-            <el-col :span="5" v-if="buttonIsShow(scope.row.button, 3)">
-              <el-button type="warning"
+          <template scope="scope">
+            <el-row type="flex" justify="center">
+              <el-button v-if="buttonIsShow(scope.row.button, 0)" class="color-dispose" type="info" size="mini">查看</el-button>
+              <el-button v-if="buttonIsShow(scope.row.button, 1)" class="color-dispose" type="info" size="mini" @click="editRow(scope.row)">编辑</el-button>
+              <el-button v-if="scope.row.sendTime === 1" class="color-dispose" type="info" size="mini" @click="matchRow(scope.row)">取消</el-button>
+              <el-button v-if="buttonIsShow(scope.row.button, 2)" class="color-dispose" type="info" size="mini">复制</el-button>
+              <el-button v-if="buttonIsShow(scope.row.button, 3)"
+                         type="warning"
                          size="mini"
                          @click="unqualifiedIsShow(scope.row.id, scope.row.main.name)">不合格</el-button>
-            </el-col>
-            <el-col :span="4" v-if="buttonIsShow(scope.row.button, 4)">
-              <el-button type="warning" size="mini">合格</el-button>
-            </el-col>
-            <el-col :span="4" v-if="buttonIsShow(scope.row.button, 5)">
-              <el-button type="danger" size="mini">退办</el-button>
-            </el-col>
-          </el-row>
-        </template>
+              <el-button v-if="buttonIsShow(scope.row.button, 4)" type="warning" size="mini" @click="qualifiedIsShow(scope.row)">合格</el-button>
+              <el-button v-if="buttonIsShow(scope.row.button, 5)" type="danger" size="mini">退办</el-button>
+            </el-row>
+          </template>
       </el-table-column>
       <el-table-column
         prop="mobileInfo.mobile"
@@ -125,6 +118,7 @@
   export default {
     data () {
       return {
+        waitHandleRow: [],
         tableData: [],
         tableDataNum: null,
         loading: false
@@ -142,6 +136,18 @@
       reset: [Object, String, Date]
     },
     methods: {
+      editRow ($row) {
+        this.tableData.list.forEach(($item, $index) => {
+          $item.sendTime = ''
+        })
+        this.matchRow($row)
+        $row.sendTime = 1
+      },
+      matchRow ($row) {
+        $row.sendTime = ''
+        let copyData = JSON.stringify(this.tableData)
+        this.waitHandleRow = JSON.parse(copyData)
+      },
       getTableData ($page) {
         var self = this
         self.loading = true
@@ -153,6 +159,8 @@
             if (response.data.status === 1) {
               self.$nextTick(function () {
                 self.tableData = response.data
+                let copyData = JSON.stringify(self.tableData)
+                self.waitHandleRow = JSON.parse(copyData)
                 self.tableDataNum = response.data.list.length
               })
             }else {
@@ -166,7 +174,6 @@
         let butArr = $button.split(',')
         return butArr[$index] == 1
       },
-      //
       showPassport ($passportNo) {
         this.$store.dispatch('handlerPassportInfo', {
           type: true,
@@ -180,11 +187,26 @@
         })
       },
       unqualifiedIsShow ($visaId, $name) {
-        this.$store.dispatch('handlerTable', {
+        this.$store.dispatch('handlerUnqualified', {
           type: true,
           visaId: $visaId,
           name: $name
         })
+      },
+      qualifiedIsShow ($row) {
+        this.$store.dispatch('handlerQualified', {
+          type: true,
+          id: $row.id,
+          name: $row.main.name
+        })
+      },
+    },
+    watch: {
+      reset () {
+        this.getTableData()
+      },
+      waitHandleRow () {
+        console.log(this.waitHandleRow)
       }
     }
   }

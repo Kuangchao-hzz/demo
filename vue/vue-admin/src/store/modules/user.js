@@ -1,6 +1,6 @@
 
 import Cookies from 'js-cookie';
-import api from '../../api/index'
+import api from '../../api/login'
 
 const user = {
   state: {
@@ -9,6 +9,7 @@ const user = {
       TOKEN: Cookies.get('TOKEN')
     },
     USER: Cookies.get('USER'),
+    roles: []
   },
   mutations: {
     SET_USER: (state, user) => {
@@ -20,6 +21,9 @@ const user = {
     SET_SESSIONUID: (state, sessionuid) => {
       state.baseData.SESSIONUID = sessionuid;
     },
+    SET_ROLES: (state, roles) => {
+      state.roles = roles
+    }
   },
   actions: {
     LoginByUser({commit}, userInfo) {
@@ -30,6 +34,12 @@ const user = {
         commit('SET_TOKEN', Cookies.get('TOKEN'));
         commit('SET_SESSIONUID', Cookies.get('SESSIONUID'));
         resolve()
+      })
+    },
+    getInfoData ({ commit }) {
+      return new Promise(resolve => {
+        commit('SET_ROLES', api.get_info())
+        resolve(api.get_info())
       })
     }
   }

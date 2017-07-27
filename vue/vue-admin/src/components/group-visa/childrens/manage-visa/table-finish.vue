@@ -54,15 +54,17 @@
       <el-table-column
         align="center"
         min-width="100"
-        fixed="right"
         label="操作信息">
         <template scope="scope">
           <el-row type="flex" justify="center">
-            <el-button v-if="buttonIsShow(scope.row.button, 0)" class="color-dispose" type="info" size="mini">查看</el-button>
-            <el-button v-if="buttonIsShow(scope.row.button, 1)" class="color-dispose" type="info" size="mini">编辑</el-button>
+            <el-button  v-if="buttonIsShow(scope.row.button, 0)" class="color-dispose" type="info" size="mini">查看</el-button>
+            <el-button  v-if="buttonIsShow(scope.row.button, 1)" class="color-dispose" type="info" size="mini">编辑</el-button>
             <el-button v-if="buttonIsShow(scope.row.button, 2)" class="color-dispose" type="info" size="mini">复制</el-button>
-            <el-button v-if="buttonIsShow(scope.row.button, 3)" type="warning" size="mini">不合格</el-button>
-            <el-button v-if="buttonIsShow(scope.row.button, 4)" type="warning" size="mini">合格</el-button>
+            <el-button v-if="buttonIsShow(scope.row.button, 3)"
+                       type="warning"
+                       size="mini"
+                       @click="unqualifiedIsShow(scope.row.id, scope.row.main.name)">不合格</el-button>
+            <el-button v-if="buttonIsShow(scope.row.button, 4)" type="warning" size="mini" @click="qualifiedIsShow(scope.row)">合格</el-button>
             <el-button v-if="buttonIsShow(scope.row.button, 5)" type="danger" size="mini">退办</el-button>
           </el-row>
         </template>
@@ -89,6 +91,7 @@
         prop="userName"
         align="center"
         width="100"
+        fixed="right"
         label="最后操作">
       </el-table-column>
     </el-table>
@@ -151,7 +154,21 @@
           type: true,
           id: $id
         })
-      }
+      },
+      unqualifiedIsShow ($visaId, $name) {
+        this.$store.dispatch('handlerUnqualified', {
+          type: true,
+          visaId: $visaId,
+          name: $name
+        })
+      },
+      qualifiedIsShow ($row) {
+        this.$store.dispatch('handlerQualified', {
+          type: true,
+          id: $row.id,
+          name: $row.main.name
+        })
+      },
     },
     watch: {
       reset () {

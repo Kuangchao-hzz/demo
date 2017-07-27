@@ -2,27 +2,21 @@
   <div class="visa-user-model">
     <OBJECT style="float:right;display: none" classid="clsid:10EC554B-357B-4188-9E5E-AC5039454D8B" id="objIDCard" width="300" height="200"></OBJECT>
     <el-dialog
-      title="日本-新增用户"
-      :visible.sync="dialogIsShowChild"
+      :title="(countryConf.name) + ' - 新增用户'"
+      :visible.sync="addVisaInfoIsShow"
       :before-close="handleClose">
       <el-form ref="FormVisaData" :model="FormVisaData">
         <el-row :gutter="10">
           <el-col :span="6">
             <el-form-item
               label="用户来源"
-            class="select-input input-80">
+            class="select-input">
               <el-select v-model="FormVisaData.sourceId" placeholder="请选择活动区域">
-                <el-option label="巨龙淘宝" value="1"></el-option>
-                <el-option label="众信淘宝" value="2"></el-option>
-                <el-option label="悠哉淘宝" value="3"></el-option>
-                <el-option label="穷游网" value="4"></el-option>
-                <el-option label="穷游机票" value="5"></el-option>
-                <el-option label="携程" value="6"></el-option>
-                <el-option label="门店" value="7"></el-option>
-                <el-option label="同行" value="8"></el-option>
-                <el-option label="商旅" value="9"></el-option>
-                <el-option label="微店" value="10"></el-option>
-                <el-option label="美团大众" value="10"></el-option>
+                <el-option v-for="($item, $index) in sourceIds"
+                           :key="$index"
+                           :label="$item.label"
+                           :value="$item.value">
+                </el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -58,7 +52,7 @@
               width-label="80"
               prop="startDate"
               :rules="{ type: 'date', required: true, message: '请选择出行日期', trigger: 'change'}"
-              class="select-input input-80 ">
+              class="select-input">
               <el-date-picker
                 v-model="FormVisaData.startDate"
                 type="date"
@@ -66,15 +60,40 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="6" v-if="countryConf.urgent === 'default'">
             <el-form-item
-              label="特殊资源"
+              label="行程"
               prop="tripType"
               label-width="70px">
               <el-radio-group v-model="FormVisaData.tripType">
                 <el-radio label="1">代</el-radio>
                 <el-radio label="2">真</el-radio>
               </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6" v-if="countryConf.urgent === 'radio'">
+            <el-form-item
+              label="加急类型"
+              prop="urgent"
+              label-width="70px">
+              <el-radio-group v-model="FormVisaData.urgent">
+                <el-radio label="1">不加急</el-radio>
+                <el-radio label="2">加急</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6" v-if="countryConf.urgent === 'select'">
+            <el-form-item
+              label="加急类型"
+              prop="urgent"
+              label-width="70px">
+              <el-select v-model="FormVisaData.urgent" placeholder="请选择活动区域">
+                <el-option v-for="($item, $index) in urgents"
+                           :key="$index"
+                           :label="$item.label"
+                           :value="$item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -103,7 +122,7 @@
           <el-col :span="12">
             <el-form-item
               prop="mobile"
-              :rules="[{required: true, message: '手机号码不能为空', trigger: 'change'},
+              :rules="[{required: countryConf.required.mobile, message: '手机号码不能为空', trigger: 'change'},
               { pattern: /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/, message: '手机号码格式不正确', trigger: 'blur'}]">
               <el-input
                 v-model="FormVisaData.mobile">
@@ -124,7 +143,7 @@
           <el-col :span="12">
             <el-form-item
               prop="emails"
-              :rules="[{ required: true, message: '邮箱不能为空', trigger: 'change'},
+              :rules="[{ required: countryConf.required.emails, message: '邮箱不能为空', trigger: 'change'},
               {type: 'email', message: '邮箱格式不正确', trigger: 'blur'}]">
               <el-input
                 v-model="FormVisaData.emails">
@@ -152,17 +171,20 @@
           </el-col>
         </el-row>
         <el-row :gutter="10">
-          <el-col :span="6">
+          <el-col :span="6" v-if="countryConf.visaType">
             <el-form-item
               label="签证类型"
-              class="select-input input-80">
+              class="select-input">
               <el-select v-model="FormVisaData.visaType" placeholder="请选择活动区域">
-                <el-option label="日本-日本单次" value="1"></el-option>
-                <el-option label="日本-冲绳单次" value="2"></el-option>
+                <el-option v-for="($item, $index) in visaTypes"
+                           :key="$index"
+                           :label="$item.label"
+                           :value="$item.value">
+                </el-option>
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="6" v-if="countryConf.urgent === 'default'">
             <el-form-item
               label="加急"
               label-width="70px">
@@ -181,6 +203,7 @@
           </el-col>
         </el-row>
         <hr v-if="isInvoiceNum">
+        <!-- 发票信息 -->
         <el-row type="flex" justify="between"
                 align="middle" :gutter="10"
                 v-for="($item, $index) in FormVisaData.invoiceNum"
@@ -246,7 +269,17 @@
             <i class="el-icon-close" @click.prevent="deleteInvoice($item)"></i>
           </el-col>
         </el-row>
-        <hr v-if="isInvoiceNum">
+        <hr v-if="isInvoiceNum" style="margin-bottom: 15px">
+        <!-- 全选 代填申请表 -->
+        <el-row v-if="!countryConf.layout">
+          <el-col :span="10">
+            <el-form-item>
+              <el-checkbox-group v-model="FormVisaData.checkAll">
+                <el-checkbox true-label="1" false-label="2" name="type">代填申请表</el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <!-- 护照信息 -->
         <el-row class="visa-user-list"
                 v-for="($item, $index) in FormVisaData.visaUserNum"
@@ -256,7 +289,7 @@
                     juslify="space-between"
                     align="middle"
                     class="user-title">
-              <el-col :span="12">申请人{{$index + 1}}</el-col>
+              <el-col :span="12">申请人{{$index | visaInfoTitle}}</el-col>
               <el-col :span="12">
                 <i class="icon icon-eye" @click="LoadRecogKenal"></i>
                 <i class="el-icon-close"
@@ -267,7 +300,7 @@
           </el-col>
           <el-col :span="24">
             <el-row :gutter="10">
-              <el-col :span="12">
+              <el-col :span="12" v-show="countryConf.mainField">
                 <el-form-item
                   :prop="'visaUserNum.' + $index  + '.customType[]'"
                   :rules="{required: true, message: '必填', trigger: 'change'}">
@@ -278,14 +311,33 @@
                   </el-radio-group>
                 </el-form-item>
               </el-col>
-              <el-col :span="12" v-show="isVisaOrder">
+              <el-col :span="7" :offset="5" v-if="!countryConf.layout"
+                      style="width: 31.06667%">
+                <el-form-item
+                  label="关系"
+                  :prop="'visaUserNum.' + $index  + '.relationship[]'"
+                  :rules="{ required: true, message: '请选择关系', trigger: 'change'}"
+                  class="select-input">
+                  <el-select v-model="$item['relationship[]']"
+                             placeholder="请选择关系"
+                             style="width: 100%;">
+                    <el-option label="其它" value="1"></el-option>
+                    <el-option label="未成年" value="2"></el-option>
+                    <el-option label="父亲" value="3"></el-option>
+                    <el-option label="母亲" value="4"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12" v-show="isVisaOrder" :class="{'phil-layout': !countryConf.layout}">
                 <el-form-item
                   label="订单号"
                   :prop="'visaUserNum.' + $index  + '.orderId[]'"
                   :rules="{ required: isVisaOrder, message: '订单号不能为空', trigger: 'change'}"
                   class="select-input input-70">
                   <el-select v-model="$item['orderId[]']"
-                             placeholder="请选择" style="width: 100%;" @input="handMatchOrder($item['orderId[]'])">
+                             @input="handMatchOrder"
+                             placeholder="请选择"
+                             style="width: 100%;">
                     <el-option label="请选择" value="" v-if="matchOrderData.length>1" selected></el-option>
                     <el-option v-for="($option, $o_index) in matchOrderData"
                                :label="$option.match"
@@ -295,15 +347,15 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row :gutter="20" type="flex" align="middle">
+            <el-row :gutter="20" type="flex" style="position: relative">
               <el-col :span="5">
                 <div class="avatar-pic">
-                  <img src="../../assets/img/header-bg.png" alt="">
+                  <img src="../../../assets/img/header-bg.png" alt="">
                 </div>
               </el-col>
-              <el-col :span="19">
+              <el-col :span="countryConf.layout?19:15">
                 <el-row :gutter="10">
-                  <el-col :span="8" style="padding-right: 7px;">
+                  <el-col :span="countryConf.layout?8:12" style="padding-right: 7px;">
                     <el-form-item
                       :prop="'visaUserNum.' + $index  + '.passportNo[]'"
                       :rules="{required: true, message: '护照号不能为空', trigger: 'change'}">
@@ -313,7 +365,7 @@
                       </el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="8">
+                  <el-col :span="countryConf.layout?8:12">
                     <el-form-item
                       :prop="'visaUserNum.' + $index  + '.name[]'"
                       :rules="{required: true, message: '姓名不能为空', trigger: 'change'}">
@@ -323,7 +375,7 @@
                       </el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="8">
+                  <el-col :span="8" v-show="countryConf.layout">
                     <el-form-item
                       label="护照数"
                       :prop="'visaUserNum.' + $index  + '.passportNum[]'"
@@ -335,7 +387,7 @@
                   </el-col>
                 </el-row>
                 <el-row :gutter="10">
-                  <el-col :span="8">
+                  <el-col :span="countryConf.layout?8:12">
                     <el-form-item
                       :prop="'visaUserNum.' + $index  + '.familyName[]'"
                       :rules="{required: true, message: '英文姓不能为空', trigger: 'change'}">
@@ -345,7 +397,7 @@
                       </el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="8">
+                  <el-col :span="countryConf.layout?8:12">
                     <el-form-item
                       :prop="'visaUserNum.' + $index  + '.firstName[]'"
                       :rules="{required: true, message: '英文名不能为空', trigger: 'change'}">
@@ -355,7 +407,7 @@
                       </el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="8">
+                  <el-col :span="8" v-if="countryConf.layout">
                     <el-form-item
                       label="性别"
                       width-label="50"
@@ -371,7 +423,7 @@
                   </el-col>
                 </el-row>
                 <el-row :gutter="10">
-                  <el-col :span="8">
+                  <el-col :span="countryConf.layout?8:12">
                     <el-form-item
                       :prop="'visaUserNum.' + $index  + '.homePlace[]'"
                       :rules="{required: true, message: '出生地不能为空', trigger: 'change'}">
@@ -381,7 +433,7 @@
                       </el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="8">
+                  <el-col :span="countryConf.layout?8:12">
                     <el-form-item
                       :prop="'visaUserNum.' + $index  + '.issuePlace[]'"
                       :rules="{required: true, message: '签发地不能为空', trigger: 'change'}">
@@ -391,7 +443,7 @@
                       </el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="8" style="padding-right: 0px">
+                  <el-col :span="8" style="padding-right: 0px" v-show="countryConf.mainField">
                     <el-col :span="10">
                       <el-form-item
                         :prop="'visaUserNum.' + $index  + '.main[]'"
@@ -402,7 +454,7 @@
                         </el-checkbox-group>
                       </el-form-item>
                     </el-col>
-                    <el-col :span="14" v-show="$item['main[]'] === '2'">
+                    <el-col :span="14" v-if="countryConf.layout" v-show="$item['main[]'] === '2'">
                       <el-form-item
                         :prop="'visaUserNum.' + $index  + '.relationship[]'"
                         :rules="{required: $item['main[]'] === '2' ? true : false, message: '关系不能为空', trigger: 'change'}">
@@ -413,15 +465,26 @@
                       </el-form-item>
                     </el-col>
                   </el-col>
+                  <el-col :span="8" style="padding-right: 0px" v-if="countryConf.outDistrict">
+                    <el-col :span="10" v-show="countryConf.layout">
+                      <el-form-item
+                        :prop="'visaUserNum.' + $index  + '.outDistrict[]'"
+                        :rules="{required: false, message: '外领区', trigger: 'change'}">
+                        <el-checkbox-group v-model="$item['outDistrict[]']">
+                          <el-checkbox true-label="1" false-label="2" name="type">外领区</el-checkbox>
+                        </el-checkbox-group>
+                      </el-form-item>
+                    </el-col>
+                  </el-col>
                 </el-row>
                 <el-row :gutter="10">
-                  <el-col :span="8">
+                  <el-col :span="countryConf.layout?8:12">
                     <el-form-item
                       label="出生日期"
                       width-label="80"
                       :prop="'visaUserNum.' + $index  + '.birthDay[]'"
                       :rules="{ type: 'date', required: true, message: '请选择出生日期', trigger: 'change'}"
-                      class="select-input input-80 ">
+                      class="select-input">
                       <el-date-picker
                         v-model="$item['birthDay[]']"
                         type="date"
@@ -429,13 +492,13 @@
                       </el-date-picker>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="8">
+                  <el-col :span="countryConf.layout?8:12">
                     <el-form-item
                       label="签发日期"
                       width-label="80"
                       :prop="'visaUserNum.' + $index  + '.issueDay[]'"
                       :rules="{ type: 'date', required: true, message: '请选择日期', trigger: 'change'}"
-                      class="select-input input-80 ">
+                      class="select-input">
                       <el-date-picker
                         v-model="$item['issueDay[]']"
                         type="date"
@@ -443,7 +506,7 @@
                       </el-date-picker>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="8" style="padding-right: 5px">
+                  <el-col :span="8" v-if="countryConf.layout" style="padding-right: 5px">
                     <el-form-item
                       label="有效期"
                       width-label="70"
@@ -459,8 +522,24 @@
                   </el-col>
                 </el-row>
               </el-col>
+              <el-col :span="4" v-if="!countryConf.layout" class="certificate-warp">
+                <el-row justify="center">
+                  <el-col :span="24">
+                    <el-form-item style="margin: 0">
+                      <el-checkbox-group v-model="$item['receipt[]']" style="text-align: center">
+                        <el-checkbox true-label="1" false-label="2">代办居住证</el-checkbox>
+                      </el-checkbox-group>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="24" class="certificate-pic">
+
+                  </el-col>
+                  <el-col :span="24"
+                          class="scan-btn"><i></i>扫描照片</el-col>
+                </el-row>
+              </el-col>
             </el-row>
-            <el-row :gutter="10">
+            <el-row :gutter="10" v-show="countryConf.mainField">
               <el-col :span="24">
                 <el-col :span="5">
                   <el-col :span="10">
@@ -468,7 +547,7 @@
                       :prop="'visaUserNum.' + $index  + '.insurance[]'"
                       :rules="{required: false, message: '保险', trigger: 'change'}">
                       <el-checkbox-group v-model="$item['insurance[]']">
-                        <el-checkbox true-label="1" false-label="2" name="type">保险</el-checkbox>
+                        <el-checkbox true-label="1" false-label="2">保险</el-checkbox>
                       </el-checkbox-group>
                     </el-form-item>
                   </el-col>
@@ -489,7 +568,7 @@
                         label="押金来源"
                         :prop="'visaUserNum.' + $index  + '.deposit[]'"
                         :rules="{required: false, message: '请选择押金来源', trigger: 'change'}"
-                        class="select-input input-80">
+                        class="select-input">
                         <el-select v-model="$item['deposit[]']" placeholder="请选择...">
                           <el-option label="请选择" value=""></el-option>
                           <el-option label="公账" value="1"></el-option>
@@ -505,7 +584,7 @@
                         label="押金方式"
                         :prop="'visaUserNum.' + $index  + '.depositType[]'"
                         :rules="{required: false, message: '收据不能为空', trigger: 'change'}"
-                        class="select-input input-80">
+                        class="select-input">
                         <el-select v-model="$item['depositType[]']" placeholder="请选择...">
                           <el-option label="无" value=""></el-option>
                           <el-option label="线上" value="1"></el-option>
@@ -538,7 +617,54 @@
                   </el-row>
                 </el-col>
               </el-col>
-            </el-row>
+            </el-row >
+            <el-row :gutter="10" v-show="!countryConf.layout">
+              <el-col :span="24">
+                <el-col :span="5">
+                  <el-col :span="10">
+                    <el-form-item
+                      :prop="'visaUserNum.' + $index  + '.insurance[]'"
+                      :rules="{required: false, message: '代填申请表', trigger: 'change'}">
+                      <el-checkbox-group v-model="$item['insurance[]']">
+                        <el-checkbox true-label="1" false-label="2">代填申请表</el-checkbox>
+                      </el-checkbox-group>
+                    </el-form-item>
+                  </el-col>
+                </el-col>
+                <el-col :span="countryConf.layout?19:15">
+                  <el-row :gutter="10">
+                    <el-col :span="countryConf.layout?8:12">
+                      <el-form-item
+                        label="有效期"
+                        width-label="70"
+                        :prop="'visaUserNum.' + $index  + '.effectiveDate[]'"
+                        :rules="{type: 'date', required: true, message: '请选择有效期', trigger: 'change'}"
+                        class="select-input input-70 ">
+                        <el-date-picker
+                          v-model="$item['effectiveDate[]']"
+                          type="date"
+                          placeholder="选择日期" style="width: 100%;">
+                        </el-date-picker>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="countryConf.layout?8:12">
+                      <el-form-item
+                        label="性别"
+                        width-label="50"
+                        :prop="'visaUserNum.' + $index  + '.sex[]'"
+                        :rules="{ required: true, message: '请选择性别', trigger: 'change'}"
+                        class="select-input">
+                        <el-select v-model="$item['sex[]']" placeholder="请选择" style="width: 100%;">
+                          <el-option label="请选择" value=""></el-option>
+                          <el-option label="男" value="1"></el-option>
+                          <el-option label="女" value="2"></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                </el-col>
+              </el-col>
+            </el-row >
           </el-col>
         </el-row>
         <!-- 假人护照信息 -->
@@ -561,16 +687,22 @@
           <el-col :span="24">
             <el-row :gutter="10">
               <el-col :span="12">
-                <el-button :key="$index" style="margin-bottom: 15px">随机复制外部材料</el-button>
-                <el-button :key="$index">随机复制内部材料</el-button>
+                <el-tooltip class="item" effect="dark" content="随机从护照库中获取一份在本套材料中未使用的护照信息" placement="top-end">
+                  <el-button :key="$index" style="margin-bottom: 15px">随机复制外部材料</el-button>
+                </el-tooltip>
+                <el-tooltip class="item" effect="dark" content="随机从本套已使用的护照列表中获取一份护照信息" placement="top-end">
+                  <el-button :key="$index">随机复制内部材料</el-button>
+                </el-tooltip>
               </el-col>
               <el-col :span="12" v-show="isVisaOrder">
                 <el-form-item
                   label="订单号"
                   :prop="'visaDummyNum.' + $index  + '.jia_orderId[]'"
                   :rules="{ required: isVisaOrder, message: '订单号不能为空', trigger: 'change'}"
-                  class="select-input input-70">
-                  <el-select v-model="$item['jia_orderId[]']" placeholder="请选择" style="width: 100%;">
+                  class="select-input">
+                  <el-select v-model="$item['jia_orderId[]']"
+                             @input="handMatchOrder"
+                             placeholder="请选择" style="width: 100%;">
                     <el-option label="请选择" value="" v-if="matchOrderData.length>1" selected></el-option>
                     <el-option v-for="($option, $o_index) in matchOrderData"
                                :label="$option.match"
@@ -626,12 +758,12 @@
         </el-row>
         <el-row :gutter="10">
           <el-col :span="24" style="text-align: center;padding-top: 20px">
-            <el-button type="primary" @click="addVisaInfo">
+            <el-button  class="color-green" type="primary" @click="addVisaInfo">
               <i class="icon icon-user-plus el-icon--left" style="position: relative;top: 1px"></i>添加护照</el-button>
-            <el-button type="primary" @click="addDummyVisaInfo">
+            <el-button  class="color-green" type="primary" @click="addDummyVisaInfo">
               <i class="icon icon-user-plus el-icon--left" style="position: relative;top: 1px"></i>添加假人</el-button>
-            <el-button type="primary" @click="onSubmit">保存</el-button>
-            <el-button type="primary" @click="handleClose">取消</el-button>
+            <el-button  class="color-green" type="primary" @click="onSubmit">保存</el-button>
+            <el-button  class="color-green" type="primary" @click="handleClose">取消</el-button>
           </el-col>
         </el-row>
       </el-form>
@@ -655,26 +787,29 @@
   * 在添加发票的时候向invoiceNum.push(invoice) 会有一个数据类型的引用问题
   * 详情 [http://www.jianshu.com/p/996671d4dcc4]
   *
-  * dialogIsShowChild: {Boolean} 该组件的显示状态
+  * addVisaInfoIsShow: {Boolean} 该组件的显示状态
   * popoverTaobao:     {Boolean} 淘宝弹出层显示状态
   * orderMatchDetails: {Array}   订单匹配字段
   * visaUserField:     {object}  动态护照信息字段
   * invoiceField:      {object}  动态发票信息字段
   * visaDummyField:    {object}  动态假人信息字段
   * FormVisaData:      {object}  表单所有字段
+  *configField:         {}
   *
   * ======================================
   * */
   import popoverTaobao from '@/common/popover/popover-taobao'
   import api_table from '@/api/table'
+  import api_submit from '@/api/submit'
+  import conf from '@/common/popover/adduser/config'
+  const qs = require('qs')
   export default {
     data () {
       return {
-        dialogIsShowChild: false,
         popoverTaobao: false,
         ordersData: [],
         orderMatchDetails:[],
-        exOrderMatchDetails:[],
+        exOrderMatchDetails: [],
         handleMatchDetails:[],
         visaUserField: {
           "customType[]": '1',
@@ -692,7 +827,7 @@
           "issuePlace[]": '',
           "effectiveDate[]": '',
           "relationship[]": '',
-          "insurance[]": '',
+          "insurance[]": '2',
           "outDistrict[]": '',
           "deposit[]": '',
           "depositType[]": '',
@@ -714,10 +849,17 @@
           'jia_firstName[]': ''
         },
         FormVisaData: {
+          id: '',
+          ver: '',
           sourceId: '1',
+          checkAll: '2',
           nickName: '',
           orderIds: '',
           emails: '',
+          remark: '',
+          expressNo: '',
+          exMobile: '',
+          address: '',
           startDate: new Date(new Date().getTime() + 5*(1000 * 60 * 60 * 24)),
           tripType: '1',
           dataSource: '1',
@@ -728,16 +870,37 @@
           visaUserNum: [],
           visaDummyNum: []
         },
+        country: 'japan'
       }
     },
-    props: ['dialogIsShow'],
+    filters: {
+      visaInfoTitle ($index) {
+        let title = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十',]
+        return title[$index]
+      }
+    },
+    props: {
+
+    },
     computed: {
+      // 获取用户来源数据
+      sourceIds () {
+        return this.$store.state.options.sourceIds[this.$store.state.include.domain]
+      },
+      // 获取加急类型数据
+      urgents () {
+        return this.$store.state.options.urgents[this.$store.state.include.domain]
+      },
+      // 获取签证类型数据
+      visaTypes () {
+        return this.$store.state.options.visaTypes
+      },
       isInvoiceNum () {
         return this.FormVisaData.invoiceNum.length !== 0 ? true : false
       },
       // 根据用户来源验证用户昵称和订单号是否必填
       isValidateNicknameOrderIds () {
-        return this.FormVisaData.sourceId > 3 ? false : true
+        return this.countryConf.sourceId.some(($item) => $item === this.FormVisaData.sourceId) ? true : false
       },
       // 根据材料来源验证快递单号是否必填
       isExpressNo () {
@@ -754,10 +917,7 @@
       // 返回计算后的订单匹配数据
       matchOrderData () {
         let self = this
-        let JSONStr = JSON.stringify(self.orderMatchDetails)
         self.handleMatchDetails = []
-        self.exOrderMatchDetails = JSON.parse(JSONStr)
-        console.log(self.exOrderMatchDetails)
         this.exOrderMatchDetails.forEach(function ($item, $index, $arr) {
           self.handleMatchDetails.push({
             match: $item.tid + ' | 购买' + $item.buyNum + '份 | ' + '已匹配' + $item.personNum + '个真 ' + $item.dummyNum + '个假',
@@ -765,6 +925,28 @@
           })
         })
         return self.handleMatchDetails
+      },
+      // 监听该组件的显示状态
+      addVisaInfoIsShow () {
+        return this.$store.state.table.addVisaInfo.type
+      },
+      // 不同国家配置文件
+      countryConf () {
+        let dev = this.$store.state.include.domain
+        if (this.country) {
+          let self = this
+          switch (this.country) {
+            case 'japan' :
+              self.visaUserField['relationship[]'] = ''; break;
+            case 'thailand' :
+              self.visaUserField['relationship[]'] = ''; break;
+            case 'philippines' :
+              self.visaUserField['relationship[]'] = '1'; break;
+            case 'other' :
+              self.visaUserField['relationship[]'] = ''; break;
+          }
+          return conf[dev][this.country]
+        }
       }
     },
     mounted () {
@@ -773,25 +955,55 @@
     methods: {
       // 提交表单
       onSubmit () {
-        this.$refs['FormVisaData'].validate((valid) => {
-          if (valid) {
-            alert('success!');
+        let data = this.FormVisaData
+        let $params = {
+          sourceId: data.sourceId,
+          nickName: data.nickName,
+          orderIds: data.orderIds,
+          startDate: data.startDate,
+          tripType: data.tripType,
+          dataSource: data.dataSource,
+          expressNo: data.expressNo,
+          mobile: data.mobile,
+          exMobile: data.exMobile,
+          emails: data.emails,
+          address: data.address,
+          remark: data.remark,
+          id: data.id || '',
+          ver: data.ver || '',
+          totalNum: data.totalNum || '',
+          visaType: data.visaType,
+          urgent: data.urgent,
+          visaUserNum: data.visaUserNum
+        }
+          api_submit.edit_addFormData($params).then((response) => {
+          if (response.data.status !== 1 ) {
+            swal(response.data.msg)
           } else {
-            alert('error');
-            return false;
+
           }
         })
-        console.log(this.FormVisaData)
-        console.log(this.orderMatchDetails)
+        this.$refs['FormVisaData'].validate((valid) => {
+          if (valid) {
+
+          } else {
+            swal('error')
+            return false
+          }
+        })
       },
       // 关闭表单前的回调 清空表单内容 并重置动态表单内容
       handleClose () {
         this.$refs['FormVisaData'].resetFields()
-        this.dialogIsShowChild = false
+        this.$store.dispatch('handlerSelectCity', {
+          type: false
+        })
         this.popoverTaobao = false
         this.FormVisaData.visaUserNum = []
         this.FormVisaData.invoiceNum = []
         this.FormVisaData.visaDummyNum = []
+        this.FormVisaData.sourceId = '1'
+        this.FormVisaData.checkAll = '2'
         this.orderMatchDetails = []
         this.handleMatchDetails = []
       },
@@ -872,8 +1084,13 @@
       addVisaInfo () {
         if (this.FormVisaData.visaUserNum.length < 10) {
           this.FormVisaData.visaUserNum.push(Object.assign({}, this.visaUserField))
+          this.handleOrderSelect()
           Object.keys(this.visaUserField).forEach(($item, $index) => {
-            this.validateFieldForm($item, 'visaUserNum')
+            if ($item === 'main[]' && this.countryConf.outDistrict) {
+
+            } else {
+              this.validateFieldForm($item, 'visaUserNum')
+            }
           });
           /*
           * ================================== BUG处理 ==================================
@@ -896,6 +1113,7 @@
       addDummyVisaInfo () {
         if (this.FormVisaData.visaDummyNum.length < 30) {
           this.FormVisaData.visaDummyNum.push(Object.assign({}, this.visaDummyField))
+          this.handleOrderSelect()
           Object.keys(this.visaDummyField).forEach(($item, $index) => {
             this.validateFieldForm($item, 'visaDummyNum')
           })
@@ -926,7 +1144,7 @@
         })
       },
       // 处理动态护照订单 当淘宝订单为1个的时候 默认选中该订单。当为多个的时候默认为'请选择'
-      handleOrderSelect ($item) {
+      handleOrderSelect ($sta) {
         this.$nextTick(function () {
           let self = this
           // 处理订单的两种情况 第一种 表单中已添加有护照信息。第二种 表单中还未添加护照信息
@@ -934,11 +1152,10 @@
             this.FormVisaData.visaUserNum.forEach(function ($item, $index, $arr) {
               // 当订单号只有1个时 所有的护照订单都为该值
               if (self.orderMatchDetails.length == 1) {
-                console.log(self.handleMatchDetails)
                 $item['orderId[]'] = self.handleMatchDetails[0]?self.handleMatchDetails[0].tid : ''
                 // 新增的时候将动态护照字段：orderId[] 的默认值设置为当前订单号
                 self.visaUserField['orderId[]'] = self.handleMatchDetails[0]?self.handleMatchDetails[0].tid : ''
-              } else {
+              }else if($sta) {
                 $item['orderId[]'] = ''
                 // 新增的时候将动态护照字段：orderId[] 的默认值重置为''
                 self.visaUserField['orderId[]'] = ''
@@ -954,12 +1171,12 @@
           // 处理假人订单的两种情况 第一种 表单中已添加有护照信息。第二种 表单中还未添加护照信息
           if (self.FormVisaData.visaDummyNum.length > 0) {
             // 当订单号只有1个时 所有的护照订单都为该值
-            this.FormVisaData.visaDummyNum.forEach(function ($item, $index) {
+            this.FormVisaData.visaDummyNum.forEach(function ($item, $index, $arr) {
               if (self.orderMatchDetails.length == 1) {
                 $item['jia_orderId[]'] = self.handleMatchDetails[0]?self.handleMatchDetails[0].tid : ''
                 // 新增的时候将动态护照字段：orderId[] 的默认值设置为当前订单号
                 self.visaDummyField['jia_orderId[]'] = self.handleMatchDetails[0]?self.handleMatchDetails[0].tid : ''
-              } else {
+              }else if($sta) {
                 $item['jia_orderId[]'] = ''
                 // 新增的时候将动态护照字段：orderId[] 的默认值重置为''
                 self.visaDummyField['jia_orderId[]'] = ''
@@ -972,19 +1189,37 @@
               self.visaDummyField['jia_orderId[]'] = ''
             }
           }
+          self.handMatchOrder()
         })
+      },
+      // 初始化计算后订单匹配数据
+      initMatchOrderData () {
+        let JSONStr = JSON.stringify(this.orderMatchDetails)
+        return JSON.parse(JSONStr)
       },
       /*
       * =================== 处理订单匹配关系 ====================
       * 1、表单上有多少个真实订单，就在已匹配的多少个订单上增加该量的订单数
       * */
-      handMatchOrder ($orderId) {
+      handMatchOrder () {
         let self = this
-        let realOrderNum = self.FormVisaData.visaUserNum.length
         let JSONStr = JSON.stringify(self.orderMatchDetails)
         self.exOrderMatchDetails = JSON.parse(JSONStr)
-        self.exOrderMatchDetails.forEach(function ($item, $index) {
-          $item.personNum += realOrderNum
+        self.FormVisaData.visaUserNum.forEach(function ($item, $index) {
+          self.exOrderMatchDetails.forEach(function (_$item, _$index) {
+            if ($item['orderId[]'] === _$item.tid) {
+              _$item.personNum++
+            }
+          })
+        })
+        self.FormVisaData.visaDummyNum.forEach(function ($item, $index) {
+          self.exOrderMatchDetails.forEach(function (_$item, _$index) {
+            console.log($item['jia_orderId[]'])
+            console.log(_$item.tid)
+            if ($item['jia_orderId[]'] === _$item.tid) {
+              _$item.dummyNum++
+            }
+          })
         })
       },
       /*
@@ -1040,7 +1275,8 @@
             this.FormVisaData.nickName = $nickNameStr
             this.FormVisaData.orderIds = $orderIdsStr
             this.orderMatchDetails = reponse.data.list
-            this.handleOrderSelect()
+            this.exOrderMatchDetails = this.initMatchOrderData()
+            this.handleOrderSelect('flag')
           })
         }
       },
@@ -1114,16 +1350,12 @@
       popoverTaobao
     },
     watch: {
-      // 监听父级组件dialog状态
-      dialogIsShow ($val) {
-        this.$emit('update:dialogIsShow', $val)
-        this.dialogIsShowChild = $val
-        // 当dialog的状态为true时，执行验证
-        this.validateForm()
-      },
-      // 监听表单的显示状态，向父级组件发送显示状态
-      dialogIsShowChild () {
-        this.$emit('update:dialogIsShow', this.dialogIsShowChild)
+      // 监听vuex返回的该组件显示状态， 如果状态为true, 则验证必填项
+      addVisaInfoIsShow () {
+        if (this.addVisaInfoIsShow) {
+          this.validateForm()
+          this.country = this.$store.state.table.addVisaInfo.city
+        }
       },
       // 监听订单号的变化， 将它转换数组
       'FormVisaData.orderIds' () {
@@ -1142,6 +1374,22 @@
         this.$nextTick(function () {
           this.$refs['FormVisaData'].validateField('expressNo')
         })
+      },
+      // 监听是否全选 代填申请表字段
+      'FormVisaData.checkAll' () {
+        let self = this
+        console.log(this.FormVisaData.checkAll)
+        if (this.FormVisaData.checkAll === '1') {
+          self.visaUserField['insurance[]'] = '1'
+          this.FormVisaData.visaUserNum.forEach(function ($item, $index) {
+            $item['insurance[]'] = '1'
+          })
+        } else {
+          self.visaUserField['insurance[]'] = '2'
+          this.FormVisaData.visaUserNum.forEach(function ($item, $index) {
+            $item['insurance[]'] = '2'
+          })
+        }
       }
     }
   }
@@ -1152,53 +1400,8 @@
     .el-form-item__label, .el-radio__label, .el-checkbox__label, .el-input__inner, .el-input-group__prepend{
       color: #556991 !important;
     }
-    .select-input{
-      .el-form-item__label{
-        text-align: center;
-        width: 50px;
-        border: 1px solid #bfcbd9;
-        padding: 10px 0;
-        border-radius: 4px;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        position: relative;
-        z-index: 111;
-        background: #fff;
-        color: #97a8be;
-      }
-      .el-form-item__content{
-        padding-left: 50px;
-        position: relative;
-        input{
-          padding-left: 14px;
-          border-bottom-left-radius: 0;
-          border-top-left-radius: 0;
-          border-left: 1px transparent solid;
-        }
-      }
-      &.input-80{
-        .el-form-item__label{
-          width: 80px;
-        }
-        .el-form-item__content{
-          padding-left: 80px;
-        }
-
-      }
-      &.input-70{
-        .el-form-item__label{
-          width: 70px;
-        }
-        .el-form-item__content{
-          padding-left: 70px;
-          left: -1px;
-          select, input{
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-          }
-        }
-
-      }
+    .el-dialog{
+      width: 1000px;
     }
     .invoice-row{
       margin: 15px 0;
@@ -1207,23 +1410,6 @@
       }
       .el-form-item{
         margin: 0;
-      }
-    }
-    .el-form-item{
-      margin-bottom: 15px;
-      &.is-required{
-        .el-form-item__label:before{
-          content: '' !important;
-          display: inline-block;
-          color: #ff4949;
-          margin-right: 4px;
-        }
-      }
-      &.is-error{
-        .el-input__inner, .el-textarea__inner{
-          border-color: #ff4949;
-          background: #ffeee5;
-        }
       }
     }
     .avatar-pic{
@@ -1296,8 +1482,55 @@
           }
         }
       }
-
     }
+    .phil-layout{
+      width: 48.1%;
+    }
+    .certificate-warp{
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 999;
+      .certificate-pic{
+        background: #ddd;
+        display: block;
+        height: 170px;
+        z-index: 99;
+        position: relative;
+        &::before{
+          content: '';
+          width: 100%;
+          height: 100%;
+          display: block;
+          background: url(../../../assets/img/live-certificate-bg.png) no-repeat center center;
+          background-size: contain;
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: 99;
+        }
+      }
+      .scan-btn{
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 0;
+        line-height: 14px;
+        i{
+          &:before{
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url(../../../assets/img/updata-eye.png) no-repeat center center;
+            background-size: contain;
+            margin: 0 5px;
+            position: relative;
+            top: 5px;
+          }
+        }
+      }
+    }
+
     .el-form-item__error{
       padding-top: 1px;
     }

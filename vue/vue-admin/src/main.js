@@ -20,7 +20,6 @@ Vue.use(ElementUI)
 Vue.use(common)
 Vue.use(AMap)
 
-router.addRoutes(asyncRouterMap)
 Vue.config.productionTip = false
 
 // webpack 有global关键字 定义全局变量
@@ -30,8 +29,20 @@ router.beforeEach((to, from, next) => {
   if(store.state.include.tableWidth == '' && store.state.include.tableHeight == ''){
     store.dispatch('captureBrowserSize')
   }
+  // 如果路由是跳转不是登录页的则判断是否有token值
   if(to.path !== '/login'){
     if(Cookies.get('TOKEN') &&　Cookies.get('SESSIONUID')){
+      if (store.state.user.roles.length === 0) {
+        store.dispatch('getInfoData').then((roles) => {
+          store.dispatch('GenerateRoutes', { roles }).then((asyncRoutes) => { // 生成可访问的路由表
+            router.addRoutes(store.getters.addRouters) // 动态添加可访问的路由表
+            let currentPath = store.getters.addRouters[0].meta.currentPath ? store.getters.addRouters[0].meta.currentPath : '/'
+            next({
+              path: currentPath
+            }); // hack方法 确保addRoutes已完成
+          })
+        })
+      }
       next()
     }else {
       next({

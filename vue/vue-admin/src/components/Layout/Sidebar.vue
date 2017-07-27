@@ -1,8 +1,10 @@
 <template>
   <div class="sidebar">
     <el-menu theme="dark"
+             mode="vertical"
+             :unique-opened="true"
              :default-active="this.$route.path"
-      router>
+             router>
       <sidebarItem :routes="routes"></sidebarItem>
     </el-menu>
   </div>
@@ -14,8 +16,11 @@
   export default {
     data () {
         return {
-          routes: asyncRouterMap
+          routes: this.$store.getters.addRouters
         }
+    },
+    computed: {
+
     },
     mounted () {
 

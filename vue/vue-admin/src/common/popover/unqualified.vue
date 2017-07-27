@@ -42,11 +42,23 @@
                 <el-radio class="radio" v-model="FormVisaData.smsType" label="2">邮箱短信</el-radio>
               </el-form-item>
             </el-col>
+            <el-col :span="24">
+              <el-form-item>
+                <el-tree
+                  :data="data2"
+                  show-checkbox
+                  default-expand-all
+                  node-key="id"
+                  ref="tree"
+                  :props="defaultProps">
+                </el-tree>
+              </el-form-item>
+            </el-col>
           </el-row>
         </el-form>
         <div slot="footer" class="dialog-footer" style="text-align: center;">
-          <el-button @click="unqualifiedIsShowChild = false">取 消</el-button>
-          <el-button type="primary" @click="onSubmit()">确 定</el-button>
+          <el-button class="color-green" @click="unqualifiedIsShowChild = false">取 消</el-button>
+          <el-button class="color-green" type="primary" @click="onSubmit()">确 定</el-button>
         </div>
       </div>
     </el-dialog>
@@ -59,6 +71,28 @@
   export default {
     data () {
       return {
+        data2: [{
+          id: 1,
+          label: '一级 1',
+          children: [{
+            id: 4,
+            label: '二级 1-1',
+            children: [{
+              id: 9,
+              label: '三级 1-1-1'
+            }, {
+              id: 10,
+              label: '三级 1-1-2'
+            }]
+          }, {
+            id: 5,
+            label: '二级 2-1',
+          }]
+        }],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        },
         unqualifiedIsShowChild: false,
         backIdField: '',
         FormVisaData: {
@@ -82,15 +116,25 @@
     },
     methods: {
       onSubmit () {
-        this.$refs['FormVisaData'].validate((valid) => {
-          if (valid) {
-            alert('success!');
-          } else {
-            alert('error');
-            return false;
-          }
+        let checkedKeys = this.$refs.tree.getCheckedKeys(true)
+        let checkedNodes = this.$refs.tree.getCheckedNodes()
+        console.log(checkedKeys)
+        console.log(checkedNodes)
+        let a = []
+        checkedKeys.forEach(($keys) => {
+          let arr = checkedNodes.map(($nodes) => {
+            if ($nodes.children && $nodes.children.length > 0) {
+              return $nodes.id
+            } else {
+              return $nodes.id
+            }
+          })
+          console.log(arr)
         })
-        console.log(this.FormVisaData)
+
+      },
+      recursionTree ($nodes) {
+        $nodes.forEach()
       },
       handleClose () {
         this.$refs['FormVisaData'].resetFields()
@@ -164,7 +208,6 @@
           color: #97a8be;
         }
         .el-form-item__content{
-          padding-left: 80px;
           .default-select {
             width: 100%;
             height: 36px;

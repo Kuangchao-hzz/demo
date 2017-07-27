@@ -9,8 +9,8 @@
       <div class="passportInfo-details-box" v-if="passportData">
         <el-row :gutter="20" type="flex">
           <el-col :span="6">
-            <div class="avatar-pic">
-              <img :src="handlerAvatar">
+            <div class="avatar-pic" style="width: 175px; height: 222px;">
+              <img :src="handlerAvatar" style="width: 100%; height: 100%;">
             </div>
           </el-col>
           <el-col :span="18">

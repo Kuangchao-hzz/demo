@@ -16,9 +16,14 @@
           </el-input>
         </el-col>
         <el-col :span="16">
-          <el-button type="primary" @click="searchResult" class="color-green">查询</el-button>
-          <el-button type="primary" class="color-green" @click="dialogIsShow = true">新增用户</el-button>
-          <el-button type="primary" class="color-green" @click="outData = true">导出数据</el-button>
+          <el-button type="primary"
+                     @click="searchResult"
+                     class="color-green">查询</el-button>
+          <el-button type="primary"
+                     class="color-green"
+                     @click="selectCityIsShow = true">新增用户</el-button>
+          <el-button type="primary"
+                     @click="outDataIsShow = true">导出数据</el-button>
         </el-col>
       </el-row>
     </div>
@@ -46,13 +51,12 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <form-add-user :dialogIsShow.sync="dialogIsShow"></form-add-user>
+    <form-add-user></form-add-user>
     <passportInfo :passportDialogIsShow.sync="passportInfo"></passportInfo>
     <serialNumber :serialNumberDialogIsShow.sync="serialNumber"></serialNumber>
+    <selectCity :selectCityIsShow.sync="selectCityIsShow"></selectCity>
     <unqualified :unqualifiedIsShow.sync="unqualified"></unqualified>
-    <el-dialog title="导出数据"
-               :visible.sync="outData">
-    </el-dialog>
+    <outData :outDataIsShow.sync="outDataIsShow"></outData>
   </div>
 </template>
 
@@ -62,15 +66,17 @@
   import tablePerson from './manage-visa/table-person.vue'
   import tableWait from './manage-visa/table-wait.vue'
   import tableSearch from './manage-visa/table-search.vue'
-  import formAddUser from '@/common/popover/adduser'
+  import api_submit from '@/api/submit'
+  import formAddUser from '@/common/popover/adduser/adduser'
+  import selectCity from '@/common/popover/selectCity'
   import passportInfo from '@/common/popover/passportInfo'
   import serialNumber from '@/common/popover/serialNumber'
   import unqualified from '@/common/popover/unqualified'
+  import outData from '@/common/popover/outData'
   /*
   * ====================================================
   *
   * activeName:                 默认显示的表格
-  * dialogIsShow:               新增用户dialog显示状态
   * dialogPassportIsShow:       护照详情dialog显示状态
   * dialogDisposeIsShow:        护照操作详情dialog显示状态
   *
@@ -80,9 +86,10 @@
     data () {
       return {
         activeName: 'person',
-        dialogIsShow: false,
         dialogPassportIsShow: false,
-        outData: false,
+        selectCityIsShow: false,
+        outDataIsShow: false,
+        qualifiedIsShow: false,
         searchRequestStatus: new Date(),
         searchFrom: {
           searchContent: '',
@@ -103,6 +110,9 @@
       },
       unqualified () {
         return this.$store.state.table.unqualified.type
+      },
+      qualified () {
+        return this.$store.state.table.qualified.type
       }
     },
     methods: {
@@ -119,27 +129,72 @@
             self.personTime = new Date(); break
         }
       },
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+      handleQualified ($id, $name) {
+        swal({
+          title: "初审合格!",
+          type: "warning",
+          html: `<p style="color: red;">编号: ${$id}，申请人: ${$name}</p>`,
+          showCancelButton: true,
+          reverseButtons: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          closeOnConfirm: false,
+        }).then(() =>{
+          api_submit.edit_qualifiedData({
+            id: $id
+          }).then((response) => {
+            if (response.data.status !== 1) {
+              swal(response.data.msg)
+            } else {
+              swal({
+                title: '操作成功！',
+                type: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: "确定",
+                closeOnConfirm: false
+              }).then(() => {
+                this.handleClick({name: this.activeName})
+              })
+            }
+          })
+        }, (isConfirm) => {
+          console.log(isConfirm)
+          if (isConfirm === 'cancel' || isConfirm === 'esc' || isConfirm === 'overlay') {
+            this.$store.dispatch('handlerQualified', {
+              type: false,
+              id: '',
+              name: ''
+            })
+          }
+        })
       },
       searchResult () {
         this.activeName = 'search'
         this.$nextTick(function () {
           this.searchRequestStatus = new Date()
         })
-
       },
       getValue ($val) {
         console.log($val)
+      }
+    },
+    watch: {
+      qualified () {
+        if (this.$store.state.table.qualified.type) {
+          let $id = this.$store.state.table.qualified.id
+          let $name = this.$store.state.table.qualified.name
+          this.handleQualified($id, $name)
+        }
       }
     },
     components: {
       formAddUser,
       serialNumber,
       passportInfo,
+      selectCity,
+      outData,
       unqualified,
       tableFinish,
       tablePerson,
@@ -152,10 +207,6 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .view-visa{
-    .pagination-block{
-      margin-top: 20px;
-      text-align: right;
-    }
     .disponse-box{
       margin-bottom: 20px;
       .el-button{
@@ -167,9 +218,6 @@
       .el-select .el-input {
         width: 105px;
       }
-    }
-    .el-dialog{
-      width: 1000px;
     }
     /* BUG
     *
