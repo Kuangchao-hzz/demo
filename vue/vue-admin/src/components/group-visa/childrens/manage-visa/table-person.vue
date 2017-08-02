@@ -167,7 +167,6 @@
               self.swal(response.data.msg)
             }
           })
-
         })
       },
       buttonIsShow ($button, $index) {

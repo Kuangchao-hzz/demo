@@ -49,13 +49,16 @@
       position: relative;
       top: -2px;
       overflow: hidden;
+      display: inline-table;
+      >.sidebar{
+        display: table-cell;
+        position: relative;
+      }
       .container{
+        display: table-cell;
         overflow: hidden;
-        box-sizing: content-box;
-        border-left: 200px solid transparent;
-        border-top: 20px solid transparent;
-        border-bottom: 20px solid transparent;
-        border-right: 20px solid transparent;
+        box-sizing: border-box;
+        border: 20px solid transparent;
         transition: all .5s;
         >div{
           height: 100%;
