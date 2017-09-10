@@ -14,11 +14,9 @@
             <div class="description">轻松掌握Android 自定义控件实现</div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -34,5 +32,9 @@ export default{
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-
+.random-recommend{
+  .imc-courses-cards{
+    margin-bottom: 0;
+  }
+}
 </style>

@@ -7,7 +7,6 @@
     <teacher-recommend></teacher-recommend>
     <random-recommend :more-random-recommend="this.randomRecommendData"></random-recommend>
   </div>
-
 </template>
 
 <script>
@@ -46,8 +45,10 @@ export default{
 }
 </script>
 
-<style lang="scss" rel="stylesheet/scss">
+<style lang="scss" rel="stylesheet/scss" type="text/scss">
   .imc-content{
+    background: #ddd;
+    overflow: hidden;
     .title{
       color: #666;
     }

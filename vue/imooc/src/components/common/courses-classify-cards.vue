@@ -72,11 +72,11 @@
   }
 </script>
 
-<style lang="scss" rel="stylesheet/scss">
+<style lang="scss" rel="stylesheet/scss" type="text/scss">
   .imc-courses-cards{
-    padding-top: 10px;
-    background: #ddd;
+    margin: 10px 0;
     text-align: center;
+    background: #fff;
     .title{
       padding: 10px 0;
       position: relative;

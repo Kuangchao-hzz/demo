@@ -2,8 +2,7 @@
   <div class="home-main">
     <scroller
     :on-refresh="refresh"
-    :on-infinite="infinite"
-    >
+    :on-infinite="infinite">
       <div class="imc-swiper">
         <swiper :options="swiperOption">
           <swiper-slide><img src="http://img.mukewang.com/590369df0001041812000460.jpg"></swiper-slide>
@@ -23,7 +22,6 @@
       </div>
       <courses-recommend :random-recommend-data="randomRecommend"></courses-recommend>
     </scroller>
-
     <transition name="fade">
       <router-view></router-view>
     </transition>
@@ -39,6 +37,7 @@ export default {
       swiperOption: {
         autoplay: 3000,
         pagination: '.swiper-pagination',
+        loop: true,
         autoplayDisableOnInteraction: false
       },
       randomRecommend: 1
@@ -69,10 +68,10 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" rel="stylesheet/scss">
+<style lang="scss" rel="stylesheet/scss" type="text/scss">
 .home-main{
   width: 100%;
-  height: 100%-5.997%;
+  height: 100%;
   position: relative;
   .imc-swiper{
     height:140px;
@@ -150,7 +149,7 @@ export default {
     transition: all .3s ease;
   }
   .fade-leave-active {
-    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
   .fade-enter, .fade-leave-active {
     transform: translateX(10px);

@@ -1,98 +1,80 @@
-<template>
-  <div class="header-bar">
-    <i :class="{
-    'icon-angle-left': headerBar_config.icon.back ,
-    'icon-search': headerBar_config.icon.search
-    }" @click='headerBar_config._handler_icon1'
-    ></i>
-    <h1>{{headerBar_config.title}}</h1>
-    <i :class="{
-    'icon-envelope-alt': headerBar_config.icon.email
-    }"></i>
-  </div>
-</template>
+<!--<template>-->
+  <!--<div class="header-bar">-->
+    <!--{{ headerLeftItemHandle(calcHeaderData) }}-->
+    <!--<h1>{{ calcHeaderData.name }}</h1>-->
+    <!--<i :class="headerRightItemHandle(calcHeaderData)"></i>-->
+  <!--</div>-->
+<!--</template>-->
 
 <script>
   export default {
     data () {
       return {
+        icon: {
+          left: '',
+          right: ''
+        },
         headerBar_config: {
           title: '慕课网',
-          icon: {
-            back: false,
-            search: true,
-            email: true
-          },
           _handler_icon1: this._search,
           _handler_icon2: this._goBack
         }
       }
     },
-    props: ['headerBarConfig'],
-    watch: {
-      '$route': 'header_bar'
+    render (createElement) {
+      return createElement('div', {
+        'class': 'header-bar'
+      }, [
+        createElement('i', {
+          'class': this.calcHeaderData.leftIcon,
+          on: {
+            click: this.calcHeaderData.handlerLeftItem || this._log
+          }
+        }),
+        createElement('h1', this.calcHeaderData.name),
+        createElement('i', {
+          'class': this.calcHeaderData.rightIcon,
+          on: {
+            click: this.calcHeaderData.handlerRightItem || this._log
+          }
+        })
+      ])
     },
-    created () {
-      this.header_bar()
+    props: ['headerBarConfig'],
+    computed: {
+      calcHeaderData () {
+        let $data = this.$route
+        let headObject = Object.assign({
+          leftIcon: '',
+          rightIcon: '',
+          handlerLeftItem: null,
+          handlerRightItem: null
+        }, $data)
+        // 标题搜索功能
+        if ($data && $data.meta && $data.meta.leftItem === 'search') {
+          headObject = Object.assign(headObject, {
+            leftIcon: 'icon-search'
+          })
+        }
+        // 标题消息通知功能
+        if ($data && $data.meta && $data.meta.rightItem === 'envelope') {
+          headObject = Object.assign(headObject, {
+            rightIcon: 'icon-envelope-alt'
+          })
+        }
+        // 标题返回功能
+        if ($data && $data.meta && $data.meta.leftItem === 'back') {
+          headObject = Object.assign(headObject, {
+            leftIcon: 'icon-angle-left',
+            handlerLeftItem: this._goBack
+          })
+        }
+        return headObject
+      }
     },
     methods: {
-      header_bar () {
-        // icon: 'back', 'search', 'email'
-        for (var i in this.headerBar_config.icon) {
-          this.headerBar_config.icon[i] = false
-        }
-        this.$store.dispatch('controller_foot_tabbar', this.$route.name)
-        switch (this.$route.name) {
-          case 'home':
-            this.headerBar_config.title = '慕课网'
-            this.headerBar_config.icon.search = true
-            this.headerBar_config.icon.email = true
-            this.headerBar_config._handler_icon1 = this._search
-            break
-          case 'courses':
-            this.headerBar_config.title = '课程'
-            this.headerBar_config.icon.search = true
-            this.headerBar_config.icon.email = true
-            this.headerBar_config._handler_icon1 = this._search
-            break
-          case 'download':
-            this.headerBar_config.title = '下载'
-            this.headerBar_config.icon.search = true
-            this.headerBar_config.icon.email = true
-            this.headerBar_config._handler_icon1 = this._search
-            break
-          case 'my':
-            this.headerBar_config.title = '我的'
-            this.headerBar_config.icon.search = true
-            this.headerBar_config.icon.email = true
-            this.headerBar_config._handler_icon1 = this._search
-            break
-          case '_example':
-            this.headerBar_config.title = '实战'
-            this.headerBar_config.icon.back = true
-            this.headerBar_config._handler_icon1 = this._goBack
-            break
-          case '_path':
-            this.headerBar_config.title = '职业路径'
-            this.headerBar_config.icon.back = true
-            this.headerBar_config._handler_icon1 = this._goBack
-            break
-          case '_question':
-            this.headerBar_config.title = '猿问'
-            this.headerBar_config.icon.back = true
-            this.headerBar_config._handler_icon1 = this._goBack
-            break
-          case '_note':
-            this.headerBar_config.title = '手记'
-            this.headerBar_config.icon.back = true
-            this.headerBar_config._handler_icon1 = this._goBack
-            break
-          case '_more':
-            this.headerBar_config.title = '发现'
-            this.headerBar_config.icon.back = true
-            this.headerBar_config._handler_icon1 = this._goBack
-            break
-        }
+      _log () {
+
       },
       _goBack () {
         this.$router.go(-1)

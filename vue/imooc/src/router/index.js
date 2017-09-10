@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/pages/home/home'
-import Example from '@/components/pages/home/Example'
-import Path from '@/components/pages/home/Path'
+import Path from '@/components/pages/home/children/Path'
 import Courses from '@/components/pages/courses/index'
 import Download from '@/components/pages/download/index'
 import My from '@/components/pages/my/index'
@@ -17,33 +16,52 @@ export default new Router({
     },
     {
       path: '/home',
-      name: 'home',
+      name: '慕课网',
+      meta: {
+        leftItem: 'search',
+        rightItem: 'envelope'
+      },
       component: Home,
       children: [
         {
           path: '_example',
-          name: '_example',
-          component: Example
+          name: '实战',
+          meta: {
+            leftItem: 'back'
+          },
+          component: resolve => require(['@/components/pages/home/children/Example'], resolve)
         },
         {
           path: '_path',
-          name: '_path',
+          name: '路径',
+          meta: {
+            leftItem: 'back'
+          },
           component: Path
         },
         {
           path: '_question',
-          name: '_question',
-          component: Example
+          name: '猿问',
+          meta: {
+            leftItem: 'back'
+          },
+          component: resolve => require(['@/components/pages/home/children/Example'], resolve)
         },
         {
           path: '_note',
-          name: '_note',
-          component: Example
+          name: '手记',
+          meta: {
+            leftItem: 'back'
+          },
+          component: resolve => require(['@/components/pages/home/children/Example'], resolve)
         },
         {
           path: '_more',
-          name: '_more',
-          component: Example
+          name: '发现',
+          meta: {
+            leftItem: 'back'
+          },
+          component: resolve => require(['@/components/pages/home/children/Example'], resolve)
         }
       ]
     },

@@ -7,6 +7,7 @@ import axios from './axios/index'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import VueScroller from 'vue-scroller'
 import store from './store/index'
+require('swiper/dist/css/swiper.css')
 
 Vue.config.productionTip = false
 Vue.use(VueAwesomeSwiper)

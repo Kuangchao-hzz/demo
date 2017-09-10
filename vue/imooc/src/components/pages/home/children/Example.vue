@@ -1,8 +1,7 @@
 <template>
     <div class="tab-example">
       <scroller
-        :on-refresh="refresh"
-      >
+        :on-refresh="refresh">
         <div class="imc-swiper">
           <swiper :options="swiperOption">
             <swiper-slide><img src="http://img.mukewang.com/590c5e220001a6b112000460.jpg"></swiper-slide>

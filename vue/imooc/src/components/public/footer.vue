@@ -21,9 +21,14 @@
     },
     computed: {
       isShow () {
-        // 从 store 实例中读取状态最简单的方法就是在计算属性中返回某个状态
-        // 每当 $store.state.foot_tabbar 变化的时候, 都会重新求取计算属性，并且触发更新相关联的 DOM
-        return this.$store.state.foot_tabbar
+        let currentPath = this.$route.path
+        let filterPath = ['/home', '/courses', '/download', '/my']
+        if (filterPath.some($item => {
+          return $item === currentPath
+        })) {
+          return true
+        }
+        return false
       }
     }
   }
